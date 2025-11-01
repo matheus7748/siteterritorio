@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa do Território</title>
+    <style>
+        /* 1. Transição e Acessibilidade */
+        * {
+            transition: all 0.3s ease;
+            box-sizing: border-box; 
+        }
+        input:focus, button:focus, .tab-btn:focus {
+            outline: 2px solid #4a90e2; 
+            outline-offset: 2px;
+        }
+        
+        /* 2. Cursor Padrão */
+        .tab-btn, .quadra button, .logout {
+            cursor: pointer;
+        }
+        
+        /* Estilos de Desktop (Padrão para telas grandes) */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            gap: 20px;
+            padding: 20px;
+            flex-direction: row;
+        }
+
+        .mapa {
+            flex: 2;
+            min-width: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            padding: 10px;
+        }
+
+        .mapa img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .painel {
+            flex: 1;
+            min-width: 350px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        
+        .painel h2 { text-align: center; margin-bottom: 20px; }
+        .tabs-bairros { display: flex; justify-content: space-around; margin-bottom: 15px; border-bottom: 2px solid #ddd; }
+        .tab-btn { background: none; border: none; padding: 10px 15px; cursor: pointer; font-weight: bold; color: #555; border-bottom: 3px solid transparent; }
+        .tab-btn.active { color: #4a90e2; border-bottom: 3px solid #4a90e2; }
+        .quadra { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 8px; border-radius: 8px; background-color: #eee; }
+        .quadra span { font-weight: bold; }
+        .quadra button { border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; color: white; font-weight: bold; min-width: 120px; }
+        
+        /* Efeito Hover nos botões de quadra */
+        .quadra button:hover {
+            filter: brightness(110%);
+            transform: scale(1.02);
+        }
+
+        .btn-nao { background-color: red; }
+        .btn-meio { background-color: orange; }
+        .btn-sim { background-color: green; }
+        .logout { display: block; width: 100%; background-color: #444; color: white; border: none; padding: 10px; border-radius: 8px; margin-top: 20px; cursor: pointer; }
+        .logout:hover { background-color: #222; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* 📱 MEDIA QUERY: AJUSTES PARA CELULAR (Telas menores que 768px) */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column; 
+                height: auto; 
+                padding: 10px;
+            }
+
+            .mapa, .painel {
+                min-width: 100%; 
+                margin-bottom: 15px;
+            }
+
+            .mapa img {
+                 max-height: 40vh; 
+                 object-fit: contain;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mapa">
+        <img src="mapa.jpg" alt="Mapa do Território">
+    </div>
+
+    <div class="painel">
+        <h2>🗺️ Quadras do Território</h2>
+        
+        <div class="tabs-bairros" id="tabsBairros"></div>
+        
+        <div id="conteudoBairros"></div>
+        
+        <button class="logout" id="logoutBtn">Sair</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+        // SUAS CONFIGURAÇÕES FIREBASE
+        const firebaseConfig = {
+            apiKey: "AIzaSyCjSNz59SgzJwzqndzOJO4GRqHZ3-6abGM",
+            authDomain: "login-territorios.firebaseapp.com",
+            projectId: "login-territorios",
+            storageBucket: "login-territorios.firebasestorage.app",
+            messagingSenderId: "495689013315",
+            appId: "1:495689013315:web:c8b22bbf1fe9ad99779cf6",
+            measurementId: "G-P4YG93BTN6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app); 
+        const auth = getAuth(app);    
+
+        // 🏘️ Definição dos Bairros e Quadras (Ajuste aqui os nomes e quantidades!)
+        const bairros = {
+            "Centro": 8,
+            "Vila Nova": 15,
+            "Jardim Tropical": 5
+        };
+
+        // Objeto que irá armazenar as referências aos botões criados
+        let quadrasPorBairro = {}; 
+
+        // ➡️ FUNÇÃO PRINCIPAL: Carrega o painel e os dados do Firebase
+        function carregarPainel() {
+            const tabsBairros = document.getElementById("tabsBairros");
+            const conteudoBairros = document.getElementById("conteudoBairros");
+            
+            // Limpa o conteúdo existente 
+            tabsBairros.innerHTML = "";
+            conteudoBairros.innerHTML = "";
+            quadrasPorBairro = {}; 
+
+            // 1. Cria as abas e os containers de conteúdo
+            Object.keys(bairros).forEach((nomeBairro, index) => {
+                const numQuadras = bairros[nomeBairro];
+                const bairroID = nomeBairro.replace(/\s/g, ''); 
+                
+                // Cria elementos DOM (Abas e Conteúdo)
+                const tabBtn = document.createElement("button");
+                tabBtn.textContent = nomeBairro;
+                tabBtn.classList.add("tab-btn");
+                tabBtn.dataset.bairro = bairroID;
+                tabsBairros.appendChild(tabBtn);
+
+                const tabContent = document.createElement("div");
+                tabContent.classList.add("tab-content");
+                tabContent.id = `content-${bairroID}`;
+                conteudoBairros.appendChild(tabContent);
+                
+                quadrasPorBairro[nomeBairro] = {}; 
+
+                // 2. Cria as quadras e adiciona o Listener de Clique
+                for (let i = 1; i <= numQuadras; i++) {
+                    const div = document.createElement("div");
+                    div.classList.add("quadra");
+
+                    const nome = document.createElement("span");
+                    nome.textContent = `Quadra ${i}`;
+
+                    const btn = document.createElement("button");
+                    btn.textContent = "Não feita";
+                    btn.classList.add("btn-nao");
+
+                    div.appendChild(nome);
+                    div.appendChild(btn);
+                    tabContent.appendChild(div);
+                    
+                    quadrasPorBairro[nomeBairro][i] = btn; 
+
+                    // 3. 🔁 Atualiza o Firebase quando clicar
+                    btn.addEventListener("click", () => {
+                        let novoStatus;
+                        // Determina o próximo status
+                        if (btn.textContent === "Não feita") {
+                            novoStatus = "Em andamento";
+                        } else if (btn.textContent === "Em andamento") {
+                            novoStatus = "Concluída";
+                        } else {
+                            novoStatus = "Não feita";
+                        }
+                        
+                        // Salva o novo status no Firebase
+                        const quadraRef = ref(db, `territorios/${bairroID}/quadra${i}`);
+                        set(quadraRef, { status: novoStatus });
+                    });
+                }
+
+                // Ativa a primeira aba por padrão
+                if (index === 0) {
+                    tabBtn.classList.add("active");
+                    tabContent.classList.add("active");
+                }
+            });
+
+            // 4. Lógica de Troca de Abas
+            tabsBairros.addEventListener("click", (e) => {
+                if (e.target.classList.contains("tab-btn")) {
+                    const targetBairro = e.target.dataset.bairro;
+                    
+                    document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+                    document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
+                    
+                    e.target.classList.add("active");
+                    document.getElementById(`content-${targetBairro}`).classList.add("active");
+                }
+            });
+            
+            // 5. 🔄 Atualiza em tempo real para todos (Ouvinte Principal)
+            const geralRef = ref(db, "territorios");
+            onValue(geralRef, (snapshot) => {
+                const dadosGerais = snapshot.val() || {};
+                
+                Object.keys(bairros).forEach(nomeBairro => {
+                    const bairroID = nomeBairro.replace(/\s/g, '');
+                    const dadosBairro = dadosGerais[bairroID] || {};
+                    
+                    for (let i = 1; i <= bairros[nomeBairro]; i++) {
+                        const status = dadosBairro[`quadra${i}`]?.status || "Não feita"; 
+                        const btn = quadrasPorBairro[nomeBairro][i];
+                        
+                        if (btn) {
+                            // Atualiza a aparência do botão
+                            if (status === "Não feita") {
+                                btn.textContent = "Não feita";
+                                btn.className = "btn-nao";
+                            } else if (status === "Em andamento") {
+                                btn.textContent = "Em andamento";
+                                btn.className = "btn-meio";
+                            } else if (status === "Concluída") {
+                                btn.textContent = "Concluída";
+                                btn.className = "btn-sim";
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+
+        // 🔒 VERIFICAÇÃO DE AUTENTICAÇÃO
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Usuário logado:", user.email);
+                carregarPainel();
+            } else {
+                // Redirecionamento corrigido para GitHub Pages
+                window.location.href = "/sitesal-ov5/index.html"; 
+            }
+        });
+
+        // 🚪 Logout
+        document.getElementById("logoutBtn").addEventListener("click", async () => {
+          await signOut(auth);
+        });
+
+    </script>
+
+</body>
+</html>

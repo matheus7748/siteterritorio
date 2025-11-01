@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Territórios</title>
+    <style>
+        /* Estilos fornecidos anteriormente */
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-top: 10px;
+        }
+
+        a {
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="senha" placeholder="Senha">
+        <button id="loginBtn">Entrar</button>
+        <p>Não tem conta? <a id="cadastroLink">Cadastre-se</a></p>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+        // Não precisamos do getAnalytics para a lógica de login
+
+        // SUAS CONFIGURAÇÕES FIREBASE (INCLUÍDAS AQUI)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCjSNz59SgzJwzqndzOJO4GRqHZ3-6abGM",
+            authDomain: "login-territorios.firebaseapp.com",
+            projectId: "login-territorios",
+            storageBucket: "login-territorios.firebasestorage.app",
+            messagingSenderId: "495689013315",
+            appId: "1:495689013315:web:c8b22bbf1fe9ad99779cf6",
+            measurementId: "G-P4YG93BTN6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // BOTÕES E INPUTS
+        const loginBtn = document.getElementById("loginBtn");
+        const cadastroLink = document.getElementById("cadastroLink");
+        const emailInput = document.getElementById("email");
+        const senhaInput = document.getElementById("senha");
+
+        // 1. VERIFICAÇÃO DE SESSÃO AUTOMÁTICA
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Usuário logado: Redireciona imediatamente
+                console.log("Usuário já logado. Redirecionando para territorio.html.");
+                window.location.href = "territorio.html";
+            }
+        });
+
+
+        // 2. LÓGICA DE LOGIN MANUAL
+        loginBtn.addEventListener("click", async () => {
+            const email = emailInput.value;
+            const senha = senhaInput.value;
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, senha);
+                alert("Login feito com sucesso! 🚀 Redirecionando...");
+                // O onAuthStateChanged fará o redirecionamento.
+            } catch (e) {
+                alert("Erro ao logar: " + e.message);
+            }
+        });
+
+        // 3. LÓGICA DE CADASTRO
+        cadastroLink.addEventListener("click", async () => {
+            const email = emailInput.value;
+            const senha = senhaInput.value;
+            
+            try {
+                if (senha.length < 6) {
+                    alert("A senha deve ter no mínimo 6 caracteres.");
+                    return;
+                }
+                
+                await createUserWithEmailAndPassword(auth, email, senha);
+                alert("Conta criada com sucesso! 🎉 Agora use o e-mail e senha para Entrar.");
+            } catch (e) {
+                alert("Erro ao cadastrar: " + e.message);
+            }
+        });
+    </script>
+</body>
+</html>
