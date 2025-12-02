@@ -361,4 +361,1546 @@
         }
 
         .data-table tbody tr {
-            transition: all var(--
+            transition: all var(--transition-fast);
+        }
+
+        .data-table tbody tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Badges e Status */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--secondary);
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent);
+        }
+
+        .badge-primary {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+        }
+
+        /* Estatísticas e Cards de Valor */
+        .stats-card {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border-medium);
+        }
+
+        .stats-value {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            margin: 12px 0;
+        }
+
+        .stats-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stats-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: var(--radius-full);
+            margin-top: 8px;
+        }
+
+        .positive {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--secondary);
+        }
+
+        .negative {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        /* Modal Moderno */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-xl);
+            transform: translateY(20px);
+            transition: transform var(--transition-normal);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border-medium);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            transition: color var(--transition-fast);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-full);
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .modal-body {
+            padding: 32px;
+        }
+
+        /* Scrollbar Personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-full);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: var(--radius-full);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* Utilitários */
+        .flex {
+            display: flex;
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .flex-center {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gap-4 { gap: 16px; }
+        .gap-6 { gap: 24px; }
+        .gap-8 { gap: 32px; }
+
+        .mb-4 { margin-bottom: 16px; }
+        .mb-6 { margin-bottom: 24px; }
+        .mb-8 { margin-bottom: 32px; }
+
+        .mt-4 { margin-top: 16px; }
+        .mt-6 { margin-top: 24px; }
+        .mt-8 { margin-top: 32px; }
+
+        .p-4 { padding: 16px; }
+        .p-6 { padding: 24px; }
+
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+
+        .w-full { width: 100%; }
+        .w-auto { width: auto; }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn var(--transition-normal) ease-out;
+        }
+
+        .animate-slideIn {
+            animation: slideIn var(--transition-normal) ease-out;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+            
+            .app-header {
+                padding: 24px;
+            }
+            
+            .app-title {
+                font-size: 24px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+            }
+        }
+
+        /* Status Indicators */
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-active {
+            background: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+
+        .status-inactive {
+            background: var(--danger);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+
+        /* Loading States */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.05),
+                transparent
+            );
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header animate-fadeIn">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <i class="fas fa-chart-line"></i> MentorComm Pro
+                </h1>
+                <p class="app-subtitle">Sistema Avançado de Gestão de Comissões • Taxa: 8%</p>
+                
+                <div class="flex-between mt-8">
+                    <div class="stats-card">
+                        <span class="stats-label">Comissão Total</span>
+                        <div class="stats-value" id="total-comissao">R$ 0,00</div>
+                        <span class="stats-change positive">
+                            <i class="fas fa-arrow-up"></i> Atualizado em tempo real
+                        </span>
+                    </div>
+                    
+                    <div class="flex-center gap-4">
+                        <button class="btn btn-outline" onclick="abrirModalCargos()">
+                            <i class="fas fa-user-tag"></i> Gerenciar Cargos
+                        </button>
+                        <button class="btn btn-outline" onclick="abrirModalHistorico()">
+                            <i class="fas fa-history"></i> Histórico
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Grid Principal -->
+        <div class="grid-2">
+            <!-- Gestão de Colaboradores -->
+            <div class="card animate-slideIn">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-users"></i> Gestão de Colaboradores
+                    </h2>
+                    <span class="badge badge-primary" id="total-colabs">0 ativos</span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Adicionar Novo Colaborador</label>
+                    <div class="grid-2 gap-4 mb-4">
+                        <input type="text" id="novo-nome" class="form-input" placeholder="Nome completo">
+                        <input type="date" id="data-adicao" class="form-input">
+                    </div>
+                    <div class="flex-between">
+                        <select id="novo-cargo" class="form-select w-auto">
+                            <option value="">Selecione um cargo</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="adicionarNovoColaborador()">
+                            <i class="fas fa-plus"></i> Adicionar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group mt-8">
+                    <label class="form-label">Colaborador Ativo</label>
+                    <select id="colaborador-selector" class="form-select" onchange="selecionarColaborador(this.value)">
+                        <option value="">Selecione um colaborador</option>
+                    </select>
+                </div>
+                
+                <div id="adicionar-msg" class="mt-4 text-center"></div>
+            </div>
+
+            <!-- Detalhes do Colaborador -->
+            <div class="card animate-slideIn">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-user-circle"></i> Detalhes
+                    </h2>
+                    <div class="flex-center">
+                        <span class="status-indicator status-active"></span>
+                        <span id="colaborador-status">Ativo</span>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 id="colaborador-nome-display" class="text-center mb-2" style="font-size: 24px; font-weight: 600;">-</h3>
+                    <p id="colaborador-cargo-display" class="text-center text-muted">-</p>
+                    <p id="data-adicao-display" class="text-center text-muted mt-2">-</p>
+                </div>
+                
+                <!-- Estatísticas Históricas -->
+                <div class="grid-2 gap-4 mb-8">
+                    <div class="stats-card">
+                        <span class="stats-label">Total Histórico</span>
+                        <div class="stats-value" id="ganho-total-historico">R$ 0,00</div>
+                    </div>
+                    <div class="stats-card">
+                        <span class="stats-label">Média Mensal</span>
+                        <div class="stats-value" id="media-mensal-historico">R$ 0,00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Serviços e Faturamento -->
+        <div class="card animate-fadeIn">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <i class="fas fa-tasks"></i> Serviços Prestados
+                </h2>
+                <button class="btn btn-sm btn-primary" onclick="adicionarServico()">
+                    <i class="fas fa-plus"></i> Novo Serviço
+                </button>
+            </div>
+            
+            <div id="servicos-container" class="mb-6">
+                <p class="text-center text-muted">Selecione um colaborador para gerenciar serviços</p>
+            </div>
+            
+            <div class="flex-between">
+                <div>
+                    <span class="stats-label">Faturamento do Período</span>
+                    <div class="stats-value" id="faturamento-individual">R$ 0,00</div>
+                </div>
+                <div class="text-right">
+                    <span class="stats-label">Comissão (8%)</span>
+                    <div class="stats-value text-success" id="comissao-individual">R$ 0,00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geração de Relatórios -->
+        <div class="grid-3 animate-fadeIn">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-filter"></i> Filtros
+                    </h2>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Filtrar por Cargo</label>
+                    <select id="filtro-cargo" class="form-select">
+                        <option value="TODOS">Todos os Cargos</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Filtrar por Colaborador</label>
+                    <select id="filtro-colaborador" class="form-select">
+                        <option value="TODOS">Todos os Colaboradores</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-calendar-alt"></i> Período
+                    </h2>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Data do Relatório</label>
+                    <input type="date" id="data-relatorio" class="form-input" onchange="salvarContextoRelatorio()">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Observações</label>
+                    <textarea id="observacoes-relatorio" class="form-textarea" rows="3" 
+                              placeholder="Observações importantes sobre o período..." 
+                              oninput="salvarContextoRelatorio()"></textarea>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-file-pdf"></i> Relatório
+                    </h2>
+                </div>
+                <div class="flex flex-col gap-4 h-full justify-center">
+                    <button class="btn btn-success w-full" onclick="gerarEArquivarRelatorio()">
+                        <i class="fas fa-file-export"></i> Gerar Relatório
+                    </button>
+                    <p class="text-center text-muted text-sm" id="pdf-message">
+                        Clique para gerar relatório completo
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Relatório Completo -->
+        <div id="relatorio-completo-output" class="card" style="display: none;">
+            <!-- Gerado dinamicamente -->
+        </div>
+    </div>
+
+    <!-- Modal de Cargos -->
+    <div id="cargoModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-user-tag"></i> Gerenciar Cargos
+                </h3>
+                <button class="modal-close" onclick="fecharModalCargos()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Adicionar Novo Cargo</label>
+                    <div class="flex gap-4">
+                        <input type="text" id="novo-cargo-modal-input" class="form-input" 
+                               placeholder="Ex: Eletricista Sênior">
+                        <button class="btn btn-primary" onclick="adicionarNovoCargo()">
+                            <i class="fas fa-plus"></i> Adicionar
+                        </button>
+                    </div>
+                </div>
+                <div id="cargos-list-display" class="mt-6 p-4 bg-secondary rounded-lg">
+                    <!-- Lista de cargos será preenchida aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Histórico -->
+    <div id="historicoModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-history"></i> Histórico de Relatórios
+                </h3>
+                <button class="modal-close" onclick="fecharModalHistorico()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="historico-lista">
+                    <p class="text-center text-muted">Carregando histórico...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // --- VARIÁVEIS DE CONFIGURAÇÃO ---
+        const TAXA_COMISSAO = 0.08;
+        const DADOS_COLLECTION = 'relatorios-comissao';
+        const DADOS_DOCUMENT = 'dados-mentor';
+
+        // --- Variáveis de Estado ---
+        let colaboradores = [];
+        let colaboradorAtivoId = null;
+        let CARGOS = ['Borracheiro', 'Alinhador', 'Mecânico', 'Outro'];
+        let contextoRelatorio = {};
+        let db;
+        let authReady = false;
+        let mentorId = 'mentor-id';
+        let historicoCollectionRef;
+        let dadosRef;
+        let updateTimeout;
+
+        // Dados mock para inicialização
+        const DADOS_MOCK = [
+            { 
+                id: 'colab-1', 
+                nome: 'Douglas de Oliveira Machado', 
+                cargo: 'Alinhador', 
+                servicos: [
+                    { servico: 'CAMBAGEM', qtd: 31, valor: 5343.00, id: 's1' }
+                ], 
+                dataAdicao: '2024-07-01' 
+            },
+            { 
+                id: 'colab-2', 
+                nome: 'Victor Alexandre Paes', 
+                cargo: 'Borracheiro', 
+                servicos: [
+                    { servico: 'BALANCEAMENTO', qtd: 166, valor: 3799.90, id: 's5' }
+                ], 
+                dataAdicao: '2024-09-15' 
+            }
+        ];
+
+        // --- Mapeamento de elementos DOM ---
+        const selectorEl = document.getElementById('colaborador-selector');
+        const nomeDisplayEl = document.getElementById('colaborador-nome-display');
+        const cargoDisplayEl = document.getElementById('colaborador-cargo-display');
+        const comissaoIndividualEl = document.getElementById('comissao-individual');
+        const faturamentoIndividualEl = document.getElementById('faturamento-individual');
+        const totalComissaoEl = document.getElementById('total-comissao');
+        const adicionarMsgEl = document.getElementById('adicionar-msg');
+        const servicosContainerEl = document.getElementById('servicos-container');
+        const novoCargoSelectEl = document.getElementById('novo-cargo');
+        const cargosListDisplayEl = document.getElementById('cargos-list-display');
+        const pdfBtnEl = document.querySelector('.btn-success');
+        const relatorioOutputEl = document.getElementById('relatorio-completo-output');
+        const cargoModalEl = document.getElementById('cargoModal');
+        const novoCargoModalInputEl = document.getElementById('novo-cargo-modal-input');
+        const historicoModalEl = document.getElementById('historicoModal');
+        const historicoListaEl = document.getElementById('historico-lista');
+        const filtroCargoEl = document.getElementById('filtro-cargo');
+        const filtroColaboradorEl = document.getElementById('filtro-colaborador');
+        const dataRelatorioEl = document.getElementById('data-relatorio');
+        const observacoesRelatorioEl = document.getElementById('observacoes-relatorio');
+        const dataAdicaoInputEl = document.getElementById('data-adicao');
+        const ganhoTotalHistoricoEl = document.getElementById('ganho-total-historico');
+        const mediaMensalHistoricoEl = document.getElementById('media-mensal-historico');
+        const dataAdicaoDisplayEl = document.getElementById('data-adicao-display');
+        const mesesDesdeAdicaoEl = document.getElementById('meses-desde-adicao');
+
+        // --- Firebase Imports ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot, collection, getDocs, addDoc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSe9MpVHGT7vEM7KRB2sxg-425SDpG4S4",
+            authDomain: "relatorio-29dd2.firebaseapp.com",
+            projectId: "relatorio-29dd2",
+            storageBucket: "relatorio-29dd2.firebasestorage.app",
+            messagingSenderId: "256113282650",
+            appId: "1:256113282650:web:e9c55edddbd4ab26f51263",
+            measurementId: "G-4WMWHDYZTN"
+        };
+
+        // Estrutura SIMPLES do Firestore
+        const getDocRef = (userId) => doc(db, "mentorComissao", userId, "dados", "principal");
+        const getHistoricoColRef = (userId) => collection(db, "mentorComissao", userId, "dados", "principal", "historico");
+
+        const performAuth = async () => {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                const auth = getAuth(app);
+
+                // Login Anônimo
+                const userCredential = await signInAnonymously(auth);
+                mentorId = userCredential.user.uid;
+                authReady = true;
+
+                console.log("✅ Autenticação Firebase Anônima SUCEDIDA. User ID:", mentorId);
+
+                // Define as referências
+                dadosRef = getDocRef(mentorId);
+                historicoCollectionRef = getHistoricoColRef(mentorId);
+
+                // Verifica se já existe dados
+                const docSnapshot = await getDoc(dadosRef);
+                
+                if (!docSnapshot.exists()) {
+                    console.log("📝 Criando dados iniciais no Firestore...");
+                    
+                    const initialData = {
+                        cargos: CARGOS,
+                        colaboradores: DADOS_MOCK,
+                        contexto: {
+                            dataRelatorio: new Date().toISOString().split('T')[0],
+                            observacoes: ''
+                        },
+                        criadoEm: new Date().toISOString()
+                    };
+                    
+                    await setDoc(dadosRef, initialData);
+                    colaboradores = DADOS_MOCK;
+                    
+                    // Interface inicial
+                    popularCargosSelector();
+                    popularFiltroCargo();
+                    popularSelector();
+                    popularFiltroColaborador();
+                    calcularRelatorioTotal();
+                    
+                } else {
+                    // Carrega dados existentes
+                    const data = docSnapshot.data();
+                    if (data.cargos) CARGOS = data.cargos;
+                    if (data.colaboradores) colaboradores = data.colaboradores;
+                    if (data.contexto) contextoRelatorio = data.contexto;
+                    
+                    // Atualiza interface
+                    popularCargosSelector();
+                    popularFiltroCargo();
+                    popularSelector();
+                    popularFiltroColaborador();
+                    calcularRelatorioTotal();
+                }
+
+                // Monitora alterações em tempo real
+                iniciarMonitoramentoFirestore();
+
+                // Atualiza data do relatório se vazia
+                if (!dataRelatorioEl.value) {
+                    dataRelatorioEl.value = new Date().toISOString().split('T')[0];
+                    salvarContextoRelatorio();
+                }
+
+            } catch (error) {
+                console.error("❌ Erro no Firebase:", error);
+                
+                // Fallback para dados locais
+                const errorBox = document.createElement('div');
+                errorBox.className = 'card';
+                errorBox.style.background = 'linear-gradient(135deg, #3c1a1a 0%, #5c2b2b 100%)';
+                errorBox.style.borderColor = 'var(--danger)';
+                errorBox.innerHTML = `
+                    <h3 class="card-title" style="color: var(--danger);">
+                        <i class="fas fa-exclamation-triangle"></i> Modo Offline
+                    </h3>
+                    <p>Usando dados locais. Erro: ${error.message}</p>
+                `;
+                document.querySelector('.app-container').prepend(errorBox);
+                
+                carregarDadosMock();
+            }
+        };
+
+        const carregarDadosMock = () => {
+            colaboradores = DADOS_MOCK;
+            CARGOS = ['Borracheiro', 'Alinhador', 'Mecânico', 'Outro'];
+            popularCargosSelector();
+            popularFiltroCargo();
+            popularSelector();
+            popularFiltroColaborador();
+            calcularRelatorioTotal();
+        };
+
+        const salvarDados = async () => {
+            if (!authReady || !dadosRef) {
+                console.log("⚠️ Firebase não está pronto, salvando localmente");
+                return;
+            }
+            
+            try {
+                const dataToSave = {
+                    cargos: CARGOS,
+                    colaboradores: colaboradores,
+                    contexto: contextoRelatorio,
+                    atualizadoEm: new Date().toISOString()
+                };
+                
+                await setDoc(dadosRef, dataToSave, { merge: true });
+                console.log("💾 Dados salvos no Firebase");
+                
+            } catch (e) {
+                console.error("Erro ao salvar dados no Firestore:", e);
+            }
+        };
+
+        const iniciarMonitoramentoFirestore = () => {
+            if (!dadosRef) return;
+            
+            onSnapshot(dadosRef, (docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    const data = docSnapshot.data();
+
+                    if (data.cargos) {
+                        CARGOS = data.cargos;
+                        popularCargosSelector();
+                        popularFiltroCargo();
+                    }
+                    
+                    if (data.colaboradores) {
+                        colaboradores = data.colaboradores;
+                        popularSelector();
+                        popularFiltroColaborador();
+                        calcularRelatorioTotal();
+
+                        if (colaboradorAtivoId) {
+                            const colaborador = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
+                            if (colaborador) renderizarServicos(colaborador);
+                        }
+                    }
+                    
+                    if (data.contexto) {
+                        contextoRelatorio = data.contexto;
+                        dataRelatorioEl.value = contextoRelatorio.dataRelatorio || '';
+                        observacoesRelatorioEl.value = contextoRelatorio.observacoes || '';
+                    }
+                    
+                    // Atualiza contador de colaboradores
+                    document.getElementById('total-colabs').textContent = `${colaboradores.length} ativos`;
+                }
+            }, (error) => {
+                console.error("Erro ao monitorar Firestore:", error);
+            });
+        };
+
+        // --- Funções de Utilidade ---
+        const formatarMoeda = (valor) => {
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor || 0);
+        };
+
+        const formatarData = (dataISO) => {
+            if (!dataISO) return 'N/D';
+            return new Date(dataISO + 'T00:00:00').toLocaleDateString('pt-BR');
+        };
+
+        // --- Funções de Interface ---
+        window.abrirModalCargos = () => {
+            cargoModalEl.classList.add('active');
+            popularCargosSelector();
+        };
+
+        window.fecharModalCargos = () => {
+            cargoModalEl.classList.remove('active');
+        };
+
+        window.abrirModalHistorico = async () => {
+            if (!authReady) {
+                alert("⚠️ Conectando ao Firebase... Tente novamente em alguns segundos.");
+                return;
+            }
+            
+            historicoListaEl.innerHTML = '<p class="text-center text-muted">Carregando histórico...</p>';
+            historicoModalEl.classList.add('active');
+
+            try {
+                const snapshot = await getDocs(historicoCollectionRef);
+
+                if (snapshot.empty) {
+                    historicoListaEl.innerHTML = '<p class="text-center text-muted">Nenhum relatório arquivado ainda.</p>';
+                    return;
+                }
+
+                let relatorios = [];
+                snapshot.forEach(doc => {
+                    relatorios.push({ id: doc.id, ...doc.data() });
+                });
+
+                relatorios.sort((a, b) => new Date(b.dataGeracaoISO) - new Date(a.dataGeracaoISO));
+
+                let html = '<div class="grid-2 gap-4">';
+                relatorios.forEach(relatorio => {
+                    const dataGeracao = relatorio.dataRelatorio || relatorio.dataGeracao || 'N/D';
+                    const filtro = relatorio.filtroAplicado || 'Geral';
+                    const totalComissao = formatarMoeda(relatorio.totalComissao);
+                    const colaboradoresCount = relatorio.colaboradoresDetalhes?.length || 0;
+
+                    html += `
+                        <div class="card" onclick="visualizarRelatorioHistorico('${relatorio.id}')" 
+                             style="cursor: pointer; padding: 20px;">
+                            <div class="flex-between mb-3">
+                                <span class="badge badge-success">${dataGeracao}</span>
+                                <span class="text-sm text-muted">${colaboradoresCount} colabs</span>
+                            </div>
+                            <div class="stats-value" style="font-size: 24px;">${totalComissao}</div>
+                            <p class="text-sm text-muted mt-2">${filtro}</p>
+                            <div class="flex-between mt-4">
+                                <button class="btn btn-sm btn-outline" 
+                                        onclick="event.stopPropagation(); visualizarRelatorioHistorico('${relatorio.id}')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" 
+                                        onclick="event.stopPropagation(); excluirRelatorioHistorico('${relatorio.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                historicoListaEl.innerHTML = html;
+
+            } catch (error) {
+                console.error("Erro ao carregar histórico:", error);
+                historicoListaEl.innerHTML = '<p class="text-center text-danger">Erro ao carregar o histórico.</p>';
+            }
+        };
+
+        window.fecharModalHistorico = () => {
+            historicoModalEl.classList.remove('active');
+        };
+
+        // Event listeners para modais
+        cargoModalEl.addEventListener('click', (e) => {
+            if (e.target === cargoModalEl) fecharModalCargos();
+        });
+
+        historicoModalEl.addEventListener('click', (e) => {
+            if (e.target === historicoModalEl) fecharModalHistorico();
+        });
+
+        // --- Gestão de Cargos ---
+        window.adicionarNovoCargo = () => {
+            const novoCargo = novoCargoModalInputEl.value.trim();
+
+            if (novoCargo.length < 3) {
+                alert("❌ Nome do cargo deve ter pelo menos 3 caracteres.");
+                return;
+            }
+            
+            if (CARGOS.map(c => c.toLowerCase()).includes(novoCargo.toLowerCase())) {
+                alert("⚠️ Este cargo já existe.");
+                return;
+            }
+
+            CARGOS.push(novoCargo);
+            salvarDados();
+            popularCargosSelector();
+            popularFiltroCargo();
+            novoCargoModalInputEl.value = "";
+            
+            // Feedback visual
+            const feedback = document.createElement('div');
+            feedback.className = 'badge badge-success';
+            feedback.textContent = `✓ Cargo "${novoCargo}" adicionado`;
+            feedback.style.marginTop = '10px';
+            feedback.style.opacity = '1';
+            
+            setTimeout(() => {
+                feedback.style.transition = 'opacity 0.5s';
+                feedback.style.opacity = '0';
+                setTimeout(() => feedback.remove(), 500);
+            }, 2000);
+            
+            cargosListDisplayEl.appendChild(feedback);
+        };
+
+        const popularCargosSelector = () => {
+            // Limpa e popula o select principal
+            novoCargoSelectEl.innerHTML = '<option value="">Selecione um cargo</option>';
+            CARGOS.forEach(cargo => {
+                const option = document.createElement('option');
+                option.value = cargo;
+                option.textContent = cargo;
+                novoCargoSelectEl.appendChild(option);
+            });
+
+            // Atualiza a lista no modal
+            cargosListDisplayEl.innerHTML = `
+                <h4 class="mb-4" style="color: var(--text-secondary); font-size: 14px;">
+                    <i class="fas fa-list"></i> CARGOS DISPONÍVEIS (${CARGOS.length})
+                </h4>
+                <div class="grid-3" style="gap: 8px;">
+                    ${CARGOS.map(cargo => `
+                        <span class="badge badge-primary">${cargo}</span>
+                    `).join('')}
+                </div>
+            `;
+        };
+
+        // --- Gestão de Colaboradores ---
+        window.adicionarNovoColaborador = () => {
+            const nomeInput = document.getElementById('novo-nome');
+            const cargoInput = document.getElementById('novo-cargo');
+            const dataAdicaoInput = document.getElementById('data-adicao');
+
+            const nome = nomeInput.value.trim();
+            const cargo = cargoInput.value;
+            const dataAdicao = dataAdicaoInput.value;
+
+            if (nome.length < 3) {
+                alert("❌ O nome deve ter pelo menos 3 caracteres!");
+                nomeInput.focus();
+                return;
+            }
+
+            if (!dataAdicao) {
+                alert("❌ A data de adição é obrigatória!");
+                dataAdicaoInput.focus();
+                return;
+            }
+
+            if (!cargo) {
+                alert("❌ Selecione um cargo!");
+                cargoInput.focus();
+                return;
+            }
+
+            const novoId = `colab-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+            const novoColaborador = {
+                id: novoId,
+                nome: nome,
+                cargo: cargo,
+                servicos: [],
+                dataAdicao: dataAdicao,
+                criadoEm: new Date().toISOString()
+            };
+
+            colaboradores.push(novoColaborador);
+            salvarDados();
+
+            // Feedback visual
+            adicionarMsgEl.innerHTML = `
+                <div class="badge badge-success animate-fadeIn">
+                    <i class="fas fa-check"></i> ${nome} adicionado com sucesso!
+                </div>
+            `;
+
+            // Limpa os campos
+            nomeInput.value = "";
+            dataAdicaoInput.value = "";
+            cargoInput.value = "";
+
+            // Seleciona automaticamente o novo colaborador
+            setTimeout(() => {
+                colaboradorAtivoId = novoId;
+                popularSelector();
+                adicionarMsgEl.innerHTML = '';
+            }, 2000);
+        };
+
+        const popularSelector = () => {
+            selectorEl.innerHTML = '<option value="">Selecione um colaborador</option>';
+            
+            colaboradores.sort((a, b) => a.nome.localeCompare(b.nome)).forEach(colab => {
+                const option = document.createElement('option');
+                option.value = colab.id;
+                option.textContent = `${colab.nome} • ${colab.cargo}`;
+                selectorEl.appendChild(option);
+            });
+
+            // Seleciona o ativo ou o primeiro disponível
+            if (!colaboradorAtivoId && colaboradores.length > 0) {
+                colaboradorAtivoId = colaboradores[0].id;
+                selectorEl.value = colaboradorAtivoId;
+                selecionarColaborador(colaboradorAtivoId);
+            } else if (colaboradorAtivoId) {
+                selectorEl.value = colaboradorAtivoId;
+                selecionarColaborador(colaboradorAtivoId);
+            }
+        };
+
+        window.selecionarColaborador = (id) => {
+            colaboradorAtivoId = id;
+            const colaborador = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
+
+            if (colaborador) {
+                nomeDisplayEl.textContent = colaborador.nome;
+                cargoDisplayEl.textContent = colaborador.cargo;
+                dataAdicaoDisplayEl.textContent = `Contratado em: ${formatarData(colaborador.dataAdicao)}`;
+                renderizarServicos(colaborador);
+                
+                // Animação de transição
+                nomeDisplayEl.classList.add('animate-fadeIn');
+                setTimeout(() => nomeDisplayEl.classList.remove('animate-fadeIn'), 500);
+            } else {
+                nomeDisplayEl.textContent = "-";
+                cargoDisplayEl.textContent = "-";
+                dataAdicaoDisplayEl.textContent = "-";
+                servicosContainerEl.innerHTML = `
+                    <div class="text-center p-8">
+                        <i class="fas fa-user-slash" style="font-size: 48px; color: var(--text-muted); margin-bottom: 16px;"></i>
+                        <p class="text-muted">Nenhum colaborador selecionado</p>
+                    </div>
+                `;
+            }
+            
+            calcularRelatorioTotal();
+        };
+
+        // --- Gestão de Serviços ---
+        const renderizarServicos = (colaborador) => {
+            if (!colaborador.servicos || colaborador.servicos.length === 0) {
+                servicosContainerEl.innerHTML = `
+                    <div class="text-center p-8">
+                        <i class="fas fa-clipboard-list" style="font-size: 48px; color: var(--text-muted); margin-bottom: 16px;"></i>
+                        <p class="text-muted">Nenhum serviço registrado</p>
+                        <button class="btn btn-primary mt-4" onclick="adicionarServico()">
+                            <i class="fas fa-plus"></i> Adicionar Primeiro Serviço
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = `
+                <table class="data-table animate-fadeIn">
+                    <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Quantidade</th>
+                            <th>Valor Unitário</th>
+                            <th>Total</th>
+                            <th style="width: 60px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            colaborador.servicos.forEach(servico => {
+                const valorUnitario = (parseFloat(servico.valor) || 0) / (parseFloat(servico.qtd) || 1);
+                const total = parseFloat(servico.valor) || 0;
+
+                html += `
+                    <tr data-service-id="${servico.id}">
+                        <td>
+                            <input type="text" value="${servico.servico}" 
+                                   class="form-input" 
+                                   style="background: transparent; border: none; padding: 0;"
+                                   oninput="atualizarServicoDetalhes('${servico.id}', 'servico', this.value)">
+                        </td>
+                        <td>
+                            <input type="number" value="${servico.qtd}" min="0" step="1"
+                                   class="form-input" 
+                                   style="width: 80px; text-align: center;"
+                                   oninput="atualizarServicoDetalhes('${servico.id}', 'qtd', this.value)">
+                        </td>
+                        <td>${formatarMoeda(valorUnitario)}</td>
+                        <td>
+                            <div class="flex-center">
+                                <span style="color: var(--text-muted); margin-right: 4px;">R$</span>
+                                <input type="number" value="${total.toFixed(2)}" min="0" step="0.01"
+                                       class="form-input" 
+                                       style="width: 120px;"
+                                       oninput="atualizarServicoDetalhes('${servico.id}', 'valor', this.value)">
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-icon btn-danger" onclick="removerServico('${servico.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+            `;
+
+            servicosContainerEl.innerHTML = html;
+        };
+
+        window.adicionarServico = () => {
+            const colaborador = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
+            if (!colaborador) {
+                alert("⚠️ Selecione um colaborador primeiro.");
+                return;
+            }
+
+            const novoServico = {
+                id: `serv-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                servico: 'Novo Serviço',
+                qtd: 1,
+                valor: 0.00
+            };
+
+            colaborador.servicos.push(novoServico);
+            salvarDados();
+            
+            // Scroll para o novo serviço
+            setTimeout(() => {
+                const newRow = document.querySelector(`[data-service-id="${novoServico.id}"]`);
+                if (newRow) {
+                    newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    const input = newRow.querySelector('input[type="text"]');
+                    if (input) input.focus();
+                }
+            }, 100);
+        };
+
+        window.removerServico = (serviceId) => {
+            if (!confirm("Tem certeza que deseja remover este serviço?")) return;
+            
+            const colaborador = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
+            if (!colaborador) return;
+
+            colaborador.servicos = colaborador.servicos.filter(s => String(s.id) !== String(serviceId));
+            salvarDados();
+        };
+
+        window.atualizarServicoDetalhes = (serviceId, campo, valor) => {
+            const colaborador = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
+            if (!colaborador) return;
+
+            const servico = colaborador.servicos.find(s => String(s.id) === String(serviceId));
+            if (!servico) return;
+
+            servico[campo] = (campo === 'servico') ? valor : (parseFloat(valor) || 0);
+
+            clearTimeout(updateTimeout);
+            updateTimeout = setTimeout(() => {
+                salvarDados();
+                calcularRelatorioTotal();
+            }, 800);
+        };
+
+        // --- Cálculos ---
+        const calcularTotalFaturadoColaborador = (colaborador) => {
+            if (!colaborador || !colaborador.servicos) return 0;
+            return colaborador.servicos.reduce((sum, s) => sum + (parseFloat(s.valor) || 0), 0);
+        };
+
+        const calcularEstatisticasHistoricas = (colaborador) => {
+            const dataAdicaoISO = colaborador.dataAdicao;
+            if (!dataAdicaoISO) {
+                return { totalGanho: 0, mesesDesdeAdicao: 0, mediaMensal: 0 };
+            }
+
+            const totalGanho = calcularTotalFaturadoColaborador(colaborador);
+            const dataInicial = new Date(dataAdicaoISO + 'T00:00:00');
+            const hoje = new Date();
+
+            let meses = (hoje.getFullYear() - dataInicial.getFullYear()) * 12;
+            meses -= dataInicial.getMonth();
+            meses += hoje.getMonth();
+
+            let mesesContabilizados = Math.max(1, meses + 1);
+            const mediaMensal = totalGanho / mesesContabilizados;
+
+            return {
+                totalGanho: totalGanho,
+                mesesDesdeAdicao: mesesContabilizados,
+                mediaMensal: mediaMensal
+            };
+        };
+
+        const calcularRelatorioTotal = () => {
+            let totalGanhoBruto = 0;
+            let totalComissaoMentor = 0;
+
+            colaboradores.forEach(colab => {
+                const ganho = calcularTotalFaturadoColaborador(colab);
+                totalGanhoBruto += ganho;
+                totalComissaoMentor += ganho * TAXA_COMISSAO;
+            });
+
+            // Atualiza o total geral
+            totalComissaoEl.textContent = formatarMoeda(totalComissaoMentor);
+            
+            // Atualiza o contador de colaboradores
+            document.getElementById('total-colabs').textContent = `${colaboradores.length} ativos`;
+
+            // Atualiza dados do colaborador ativo
+            const colab = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
+            if (colab) {
+                const ganho = calcularTotalFaturadoColaborador(colab);
+                faturamentoIndividualEl.textContent = formatarMoeda(ganho);
+                comissaoIndividualEl.textContent = formatarMoeda(ganho * TAXA_COMISSAO);
+
+                const stats = calcularEstatisticasHistoricas(colab);
+                ganhoTotalHistoricoEl.textContent = formatarMoeda(stats.totalGanho);
+                mediaMensalHistoricoEl.textContent = formatarMoeda(stats.mediaMensal);
+                dataAdicaoDisplayEl.textContent = `Contratado em: ${formatarData(colab.dataAdicao)}`;
+            } else {
+                faturamentoIndividualEl.textContent = formatarMoeda(0);
+                comissaoIndividualEl.textContent = formatarMoeda(0);
+                ganhoTotalHistoricoEl.textContent = formatarMoeda(0);
+                mediaMensalHistoricoEl.textContent = formatarMoeda(0);
+            }
+        };
+
+        // --- Filtros ---
+        const popularFiltroCargo = () => {
+            filtroCargoEl.innerHTML = '<option value="TODOS">Todos os Cargos</option>';
+            [...new Set(colaboradores.map(c => c.cargo))].sort().forEach(cargo => {
+                const option = document.createElement('option');
+                option.value = cargo;
+                option.textContent = cargo;
+                filtroCargoEl.appendChild(option);
+            });
+        };
+
+        const popularFiltroColaborador = () => {
+            filtroColaboradorEl.innerHTML = '<option value="TODOS">Todos os Colaboradores</option>';
+            colaboradores.sort((a, b) => a.nome.localeCompare(b.nome)).forEach(colab => {
+                const option = document.createElement('option');
+                option.value = colab.id;
+                option.textContent = `${colab.nome} (${colab.cargo})`;
+                filtroColaboradorEl.appendChild(option);
+            });
+        };
+
+        // --- Contexto do Relatório ---
+        window.salvarContextoRelatorio = () => {
+            contextoRelatorio.dataRelatorio = dataRelatorioEl.value;
+            contextoRelatorio.observacoes = observacoesRelatorioEl.value;
+            salvarDados();
+        };
+
+        // --- Geração de Relatórios ---
+        window.gerarEArquivarRelatorio = async () => {
+            if (!authReady) {
+                alert("⚠️ Aguarde a conexão com o Firebase ser estabelecida.");
+                return;
+            }
+
+            const filtroCargo = filtroCargoEl.value;
+            const filtroColaboradorId = filtroColaboradorEl.value;
+
+            // Filtragem
+            let colaboradoresFiltrados = colaboradores;
+
+            if (filtroColaboradorId !== 'TODOS') {
+                colaboradoresFiltrados = colaboradores.filter(c => c.id === filtroColaboradorId);
+            } else if (filtroCargo !== 'TODOS') {
+                colaboradoresFiltrados = colaboradores.filter(c => c.cargo === filtroCargo);
+            }
+
+            if (colaboradoresFiltrados.length === 0) {
+                alert("❌ Nenhum colaborador encontrado com os filtros aplicados.");
+                return;
+            }
+
+            const totalComissao = colaboradoresFiltrados.reduce((total, c) => 
+                total + calcularTotalFaturadoColaborador(c) * TAXA_COMISSAO, 0);
+
+            // Prepara os dados do relatório
+            const relatorioSnapshot = {
+                dataGeracao: new Date().toLocaleDateString('pt-BR'),
+                dataGeracaoISO: new Date().toISOString(),
+                filtroAplicado: filtroColaboradorId !== 'TODOS' ? 
+                    `Colaborador: ${colaboradoresFiltrados[0].nome}` :
+                    (filtroCargo !== 'TODOS' ? `Cargo: ${filtroCargo}` : 'Todos (Geral)'),
+                totalComissao: totalComissao,
+                colaboradoresDetalhes: colaboradoresFiltrados,
+                dataRelatorio: contextoRelatorio.dataRelatorio || new Date().toLocaleDateString('pt-BR'),
+                observacoes: contextoRelatorio.observacoes || 'Nenhuma observação.'
+            };
+
+            // Arquiva no Firestore
+            try {
+                const addRef = await addDoc(historicoCollectionRef, relatorioSnapshot);
+                
+                // Feedback visual
+                const message = document.getElementById('pdf-message');
+                message.innerHTML = `
+                    <div class="badge badge-success animate-fadeIn">
+                        <i class="fas fa-check"></i> Relatório arquivado! ID: ${addRef.id.substr(0, 8)}
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    message.innerHTML = 'Clique para gerar relatório completo';
+                }, 3000);
+                
+            } catch (e) {
+                document.getElementById('pdf-message').innerHTML = `
+                    <div class="badge badge-danger">
+                        <i class="fas fa-exclamation-triangle"></i> Erro ao salvar: ${e.message}
+                    </div>
+                `;
+            }
+
+            // Gera visualização
+            gerarRelatorioVisual(relatorioSnapshot);
+        };
+
+        window.visualizarRelatorioHistorico = async (docId) => {
+            if (!authReady) {
+                alert("⚠️ Aguarde a conexão com o Firebase.");
+                return;
+            }
+            
+            fecharModalHistorico();
+
+            try {
+                const docRefHistorico = doc(historicoCollectionRef, docId);
+                const docSnapshot = await getDoc(docRefHistorico);
+
+                if (!docSnapshot.exists()) {
+                    alert('❌ Relatório histórico não encontrado.');
+                    return;
+                }
+
+                const relatorio = docSnapshot.data();
+                gerarRelatorioVisual(relatorio);
+
+                // Scroll para o relatório
+                relatorioOutputEl.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error("Erro ao carregar relatório histórico:", error);
+                alert("❌ Erro ao carregar relatório.");
+            }
+        };
+
+        window.excluirRelatorioHistorico = async (docId) => {
+            if (!confirm("⚠️ Tem certeza que deseja EXCLUIR este relatório permanentemente?")) {
+                return;
+            }
+
+            try {
+                const docRefHistorico = doc(historicoCollectionRef, docId);
+                await deleteDoc(docRefHistorico);
+                
+                // Feedback visual
+                alert("✅ Relatório excluído com sucesso!");
+                
+                // Atualiza a lista
+                abrirModalHistorico();
+                
+            } catch (error) {
+                console.error("Erro ao excluir relatório:", error);
+                alert("❌ Erro ao excluir relatório.");
+            }
+        };
+
+        const gerarRelatorioVisual = (relatorio) => {
+            const { colaboradoresDetalhes, totalComissao, dataGeracao, filtroAplicado, dataRelatorio, observacoes } = relatorio;
+
+            let html = `
+                <div class="animate-fadeIn">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-file-pdf"></i> Relatório de Comissão
+                        </h2>
+                        <div class="flex-center gap-4">
+                            <span class="badge badge-success">${dataRelatorio || dataGeracao}</span>
+                            <button class="btn btn-primary" onclick="window.print()">
+                                <i class="fas fa-print"></i> Imprimir
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <div class="grid-3 gap-6">
+                            <div class="stats-card">
+                                <span class="stats-label">Comissão Total</span>
+                                <div class="stats-value">${formatarMoeda(totalComissao)}</div>
+                            </div>
+                            <div class="stats-card">
+                                <span class="stats-label">Colaboradores</span>
+                                <div class="stats-value">${colaboradoresDetalhes.length}</div>
+                            </div>
+                            <div class="stats-card">
+                                <span class="stats-label">Filtro</span>
+                                <div class="stats-value" style="font-size: 18px;">${filtroAplicado}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    ${observacoes ? `
+                        <div class="mb-8 p-6" style="background: var(--bg-secondary); border-radius: var(--radius-md);">
+                            <h4 class="mb-3" style="color: var(--text-secondary);">
+                                <i class="fas fa-sticky-note"></i> Observações
+                            </h4>
+                            <p>${observacoes}</p>
+                        </div>
+                    ` : ''}
+            `;
+
+            colaboradoresDetalhes.forEach((colab, index) => {
+                const faturamentoIndividual = calcularTotalFaturadoColaborador(colab);
+                const comissaoIndividual = faturamentoIndividual * TAXA_COMISSAO;
+                const stats = calcularEstatisticasHistoricas(colab);
+
+                html += `
+                    <div class="card mb-6" style="border-left: 4px solid var(--primary);">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <span class="badge badge-primary">${index + 1}</span>
+                                ${colab.nome}
+                                <span class="text-sm text-muted">(${colab.cargo})</span>
+                            </h3>
+                            <span class="badge badge-success">${formatarMoeda(faturamentoIndividual)}</span>
+                        </div>
+                        
+                        <div class="grid-3 gap-6 mb-6">
+                            <div class="p-4" style="background: var(--bg-secondary); border-radius: var(--radius-md);">
+                                <span class="stats-label">Comissão (8%)</span>
+                                <div class="stats-value" style="font-size: 24px; color: var(--secondary);">
+                                    ${formatarMoeda(comissaoIndividual)}
+                                </div>
+                            </div>
+                            <div class="p-4" style="background: var(--bg-secondary); border-radius: var(--radius-md);">
+                                <span class="stats-label">Total Histórico</span>
+                                <div class="stats-value" style="font-size: 20px;">
+                                    ${formatarMoeda(stats.totalGanho)}
+                                </div>
+                            </div>
+                            <div class="p-4" style="background: var(--bg-secondary); border-radius: var(--radius-md);">
+                                <span class="stats-label">Média Mensal</span>
+                                <div class="stats-value" style="font-size: 20px;">
+                                    ${formatarMoeda(stats.mediaMensal)}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mb-4" style="color: var(--text-secondary);">
+                            <i class="fas fa-list-ol"></i> Serviços Prestados
+                        </h4>
+                        
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Serviço</th>
+                                    <th>Qtd.</th>
+                                    <th>Valor Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${colab.servicos.map(servico => `
+                                    <tr>
+                                        <td>${servico.servico}</td>
+                                        <td>${servico.qtd}</td>
+                                        <td>${formatarMoeda(servico.valor)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            });
+
+            html += `
+                    <div class="text-center mt-8 pt-6" style="border-top: 1px solid var(--border-medium);">
+                        <p class="text-muted">Relatório gerado em ${new Date().toLocaleString('pt-BR')}</p>
+                    </div>
+                </div>
+            `;
+
+            relatorioOutputEl.innerHTML = html;
+            relatorioOutputEl.style.display = 'block';
+            
+            // Animação de entrada
+            relatorioOutputEl.classList.add('animate-fadeIn');
+        };
+
+        // --- Inicialização ---
+        window.addEventListener('DOMContentLoaded', () => {
+            performAuth();
+            
+            // Configura data padrão para o relatório
+            if (!dataRelatorioEl.value) {
+                const hoje = new Date();
+                const primeiroDia = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+                dataRelatorioEl.value = primeiroDia.toISOString().split('T')[0];
+            }
+        });
+
+        // Exporta funções para o escopo global
+        window.adicionarNovoCargo = adicionarNovoCargo;
+        window.abrirModalCargos = abrirModalCargos;
+        window.fecharModalCargos = fecharModalCargos;
+        window.adicionarNovoColaborador = adicionarNovoColaborador;
+        window.adicionarServico = adicionarServico;
+        window.removerServico = removerServico;
+        window.atualizarServicoDetalhes = atualizarServicoDetalhes;
+        window.gerarEArquivarRelatorio = gerarEArquivarRelatorio;
+        window.abrirModalHistorico = abrirModalHistorico;
+        window.fecharModalHistorico = fecharModalHistorico;
+        window.visualizarRelatorioHistorico = visualizarRelatorioHistorico;
+        window.excluirRelatorioHistorico = excluirRelatorioHistorico;
+        window.salvarContextoRelatorio = salvarContextoRelatorio;
+        window.selecionarColaborador = selecionarColaborador;
+    </script>
+</body>
+</html>
