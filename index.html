@@ -1,1511 +1,364 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório de Comissão do Mentor - Edição</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>MentorComm | Sistema de Comissões</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-      /* === PALETA DE CORES PROFISSIONAL (PRETO DISCRETO) === */
-      :root {
-        --bg-principal: #121212;
-        /* Fundo mais escuro */
-        --bg-painel: #1e1e1e;
-        /* Painel/Card */
-        --bg-input: #282828;
-        /* Fundo de Inputs/Secções */
-        --borda-suave: #3a3a3a;
-        /* Borda e Separadores */
-        --texto-principal: #F0F0F0;
-        --texto-secundario: #A0A0A0;
-        --azul-profissional: #4A90E2;
-        /* NOVO: Acento de cor para ações */
-        --verde-sucesso: #4CAF50;
-        /* Única cor de destaque (Comissão Final) */
-        --laranja-aviso: #FFC107;
-        /* Cor de Alerta/Média */
-        --vermelho-erro: #DC3545;
-        /* Remover/Erro */
-        --cor-hover: #606060;
-        /* Cinza claro no hover */
-      }
+        :root {
+            /* Paleta de cores moderna - Dark Mode Profissional */
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --warning: #fbbf24;
+            
+            /* Tons de cinza sofisticados */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --bg-card: #1e293b;
+            --bg-input: #334155;
+            
+            /* Texto e bordas */
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-light: #475569;
+            --border-medium: #334155;
+            --border-dark: #1e293b;
+            
+            /* Efeitos */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+            
+            /* Transições */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Bordas */
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+        }
 
-      * {
-        box-sizing: border-box;
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-      body {
-        margin: 0;
-        font-family: 'Inter', sans-serif;
-        background-color: var(--bg-principal);
-        color: var(--texto-principal);
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        min-height: 100vh;
-        padding: 20px;
-      }
-
-      /* CONTAINER PRINCIPAL (Single Column) */
-      #app-container {
-        width: 100%;
-        max-width: 900px;
-        /* Largura máxima para desktop */
-        display: flex;
-        flex-direction: column;
-        gap: 25px;
-      }
-
-      /* ESTILO GERAL DE SEÇÕES */
-      .painel-secao {
-        width: 100%;
-        background: var(--bg-painel);
-        border: 1px solid var(--borda-suave);
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-      }
-
-      h1 {
-        text-align: center;
-        margin-bottom: 5px;
-        color: var(--texto-principal);
-        font-size: 26px;
-        font-weight: 800;
-      }
-
-      h2 {
-        font-size: 18px;
-        color: var(--texto-principal);
-        /* Títulos neutros */
-        border-bottom: 2px solid var(--borda-suave);
-        padding-bottom: 8px;
-        margin-bottom: 20px;
-        font-weight: 600;
-      }
-
-      /* ESTILO DOS INPUTS GERAIS E SELECT */
-      input[type="text"],
-      input[type="number"],
-      select,
-      textarea,
-      input[type="date"] {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid var(--borda-suave);
-        border-radius: 6px;
-        font-size: 16px;
-        background-color: var(--bg-input);
-        color: var(--texto-principal);
-        margin-bottom: 15px;
-        transition: all 0.2s ease;
-      }
-
-      /* ANIMAÇÃO CSS NO FOCO (Cores neutras para discreto, mas funcional) */
-      input:focus,
-      select:focus,
-      button:focus,
-      textarea:focus {
-        outline: 2px solid var(--azul-profissional);
-        outline-offset: 1px;
-        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
-        border-color: var(--azul-profissional);
-      }
-
-      .input-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: 600;
-        font-size: 14px;
-        color: var(--texto-principal);
-      }
-
-      /* SEÇÃO DE RESULTADOS NA TELA (SOMA DE CÁLCULOS) */
-      .relatorio-section {
-        background-color: var(--bg-input);
-        border: 1px solid var(--borda-suave);
-        padding: 20px;
-        border-radius: 8px;
-      }
-
-      .result-line {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
-        border-bottom: 1px dotted var(--borda-suave);
-      }
-
-      .result-line:last-of-type {
-        border-bottom: none;
-      }
-
-      /* Destaque para as novas informações */
-      .result-line.historico-info {
-        background-color: #333333;
-        /* Fundo levemente diferente */
-        border-radius: 4px;
-        padding: 8px 10px;
-        margin: 5px 0;
-      }
-
-      .result-line.historico-info .value {
-        color: var(--laranja-aviso);
-        font-weight: 700;
-      }
-
-
-      .total-comissao {
-        padding-top: 15px;
-        margin-top: 15px;
-        border-top: 2px solid var(--verde-sucesso);
-        /* Destaque VERDE para o total */
-      }
-
-      .total-comissao .value {
-        font-size: 26px;
-        font-weight: 800;
-        color: var(--verde-sucesso);
-      }
-
-      /* BOTÕES (DISCRETOS) */
-      button {
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        padding: 10px 15px;
-        border: 1px solid var(--borda-suave);
-        transition: all 0.2s ease-out;
-        /* background-color: var(--cor-acao); (Removido - será por classe) */
-        color: var(--texto-principal);
-      }
-
-      /* Efeito de "Lift" profissional nos botões */
-      button:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-        filter: brightness(1.15);
-        /* Efeito de brilho sutil */
-      }
-
-      button:active:not(:disabled) {
-        transform: translateY(0);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        filter: brightness(0.85);
-      }
-
-      /* Botões Específicos */
-      /* #adicionar-pessoa-btn { background-color: var(--cor-acao); } (Removido) */
-
-      /* Botão Principal de Relatório */
-      .btn-primary {
-        background-color: var(--verde-sucesso);
-        /* Mantém verde para ser a cor de Ação/Sucesso */
-        color: var(--bg-principal);
-        /* Texto escuro no verde */
-        border: none;
-      }
-
-      .btn-primary:hover:not(:disabled) {
-        background-color: #43A047;
-        color: white;
-      }
-
-      /* Botão Secundário (Ação Padrão) */
-      .btn-secondary {
-        background-color: var(--azul-profissional);
-        color: white;
-        border: none;
-      }
-
-      .btn-secondary:hover:not(:disabled) {
-        background-color: #3782E0;
-      }
-
-      /* Botão Terciário (Outline/Discreto) */
-      .btn-tertiary {
-        background-color: transparent;
-        border: 1px solid var(--borda-suave);
-        color: var(--texto-secundario);
-      }
-
-      .btn-tertiary:hover:not(:disabled) {
-        background-color: var(--bg-input);
-        color: var(--texto-principal);
-        border-color: var(--texto-secundario);
-      }
-
-      /* Botão Destrutivo (Remover) */
-      .btn-destructive {
-        background-color: var(--vermelho-erro);
-        color: white;
-        padding: 5px 10px;
-        font-size: 12px;
-        border: none;
-      }
-
-      .btn-destructive:hover:not(:disabled) {
-        background-color: #C62828;
-      }
-
-      button:disabled {
-        background-color: var(--borda-suave) !important;
-        color: var(--texto-secundario);
-        transform: none !important;
-        cursor: default;
-        box-shadow: none;
-        filter: none;
-      }
-
-      .message {
-        font-size: 12px;
-        color: var(--texto-secundario);
-        margin-top: 10px;
-        text-align: center;
-      }
-
-      /* TABELA DE SERVIÇOS */
-      .service-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-        font-size: 13px;
-      }
-
-      .service-table th,
-      .service-table td {
-        padding: 8px;
-        border: 1px solid var(--borda-suave);
-        text-align: center;
-      }
-
-      .service-table th {
-        background-color: var(--bg-input);
-        color: var(--texto-secundario);
-        font-weight: 700;
-      }
-
-      .service-table td {
-        background-color: var(--bg-painel);
-      }
-
-      .service-table input,
-      .service-table textarea {
-        padding: 5px;
-        border: 1px solid var(--borda-suave);
-        border-radius: 4px;
-        background-color: var(--bg-input);
-        color: var(--texto-principal);
-        margin: 0;
-        width: 100%;
-        text-align: center;
-      }
-
-      .service-table .service-name-input {
-        text-align: left;
-      }
-
-      .service-table textarea {
-        min-height: 60px;
-        resize: vertical;
-      }
-
-      /* RELATÓRIO COMPLETO (FINAL) */
-      #relatorio-completo-output {
-        display: none;
-        /* Inicia oculto */
-        background: var(--bg-painel);
-        border: 1px solid var(--borda-suave);
-        padding: 30px;
-        border-radius: 12px;
-      }
-
-      #relatorio-completo-output h3 {
-        color: var(--texto-principal);
-        font-size: 22px;
-        border-bottom: 1px solid var(--borda-suave);
-        padding-bottom: 10px;
-        margin-top: 0;
-      }
-
-      .relatorio-detalhe {
-        margin-bottom: 30px;
-        padding: 15px;
-        border: 1px solid var(--borda-suave);
-        border-radius: 8px;
-        background-color: var(--bg-input);
-      }
-
-      .relatorio-detalhe h4 {
-        color: var(--texto-principal);
-        font-size: 18px;
-        font-weight: 700;
-        margin-top: 0;
-        margin-bottom: 10px;
-      }
-
-      .relatorio-detalhe p {
-        margin: 5px 0;
-        font-size: 14px;
-      }
-
-      .relatorio-detalhe .comissao-individual {
-        color: var(--verde-sucesso);
-      }
-
-      /* === MODAL STYLES (Minimalist) === */
-      .modal-backdrop {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        z-index: 1000;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .modal-backdrop.open {
-        display: flex;
-        opacity: 1;
-      }
-
-      .modal-content {
-        background: var(--bg-painel);
-        border: 1px solid var(--borda-suave);
-        border-radius: 8px;
-        padding: 25px;
-        width: 90%;
-        max-width: 550px;
-        /* Aumentado para melhor visualização do histórico */
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        transform: scale(0.95);
-        transition: transform 0.3s ease;
-        max-height: 90vh;
-        overflow-y: auto;
-      }
-
-      .modal-backdrop.open .modal-content {
-        transform: scale(1);
-      }
-
-      .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid var(--borda-suave);
-        padding-bottom: 15px;
-        margin-bottom: 20px;
-      }
-
-      .modal-header h3 {
-        margin: 0;
-        font-size: 20px;
-        color: var(--texto-principal);
-      }
-
-      .modal-close-btn {
-        background: none;
-        border: none;
-        color: var(--texto-secundario);
-        font-size: 24px;
-        line-height: 1;
-        padding: 5px;
-        cursor: pointer;
-        transition: transform 0.2s ease, color 0.2s ease;
-      }
-
-      .modal-close-btn:hover {
-        color: var(--texto-principal);
-        transform: rotate(90deg);
-      }
-
-      /* Estilos do Histórico */
-      .historico-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        margin-bottom: 8px;
-        background-color: var(--bg-input);
-        border-radius: 6px;
-        /* cursor: pointer; (Removido do item principal) */
-        transition: background-color 0.2s;
-        font-size: 14px;
-      }
-
-      .historico-item-info {
-        /* Nova div para agrupar info e ser clicável */
-        flex-grow: 1;
-        cursor: pointer;
-        padding: 5px;
-      }
-
-      .historico-item-info:hover {
-        background-color: #333333;
-        /* Efeito hover só na info */
-      }
-
-      .historico-item span {
-        color: var(--texto-secundario);
-      }
-
-      .historico-item strong {
-        color: var(--verde-sucesso);
-        font-weight: 700;
-      }
-
-      .historico-item .btn-historico-delete {
-        /* Novo botão de delete */
-        background-color: var(--vermelho-erro);
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 5px 8px;
-        font-size: 12px;
-        font-weight: 700;
-        margin-left: 10px;
-        cursor: pointer;
-      }
-
-      .historico-item .btn-historico-delete:hover {
-        background-color: #C62828;
-        transform: scale(1.05);
-      }
-
-
-      /* RESPONSIVIDADE (CONSOLIDADO) */
-      @media (max-width: 600px) {
         body {
-          padding: 10px;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
         }
 
-        .painel-secao {
-          padding: 20px;
+        /* Layout Principal */
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
 
-        h1 {
-          font-size: 22px;
-          /* Reduz o título principal */
+        /* Header Estilizado */
+        .app-header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border-radius: var(--radius-xl);
+            padding: 32px 40px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
         }
 
-        h2 {
-          font-size: 17px;
-          /* Reduz os subtítulos */
+        .app-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, var(--primary) 0%, transparent 70%);
+            opacity: 0.1;
+            border-radius: 0 0 0 100px;
         }
 
-        #filtro-relatorio-section,
-        #periodo-observacoes-section {
-          grid-template-columns: 1fr;
+        .header-content {
+            position: relative;
+            z-index: 1;
         }
-      }
 
-      /* --- ESTILOS DE FILTRO --- */
-      #filtro-relatorio-section {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-      }
-
-      #periodo-observacoes-section {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-      }
-
-      #periodo-observacoes-section textarea {
-        margin-bottom: 0;
-        min-height: 100px;
-      }
-
-      @media (max-width: 600px) {
-
-        /* (Esta seção duplicada foi removida e consolidada acima) */
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app-container">
-      <div id="critical-error-box" style="display:none; background: #3c1a1a; border: 1px solid var(--vermelho-erro); padding: 20px; border-radius: 8px; text-align: center;">
-        <h3 style="color: var(--vermelho-erro); margin-top: 0;">Erro Crítico de Configuração</h3>
-        <p id="critical-error-message" style="color: var(--texto-principal); font-size: 16px;">--</p>
-      </div>
-      <header class="mb-6">
-        <h1>Relatório de Comissão do Mentor</h1>
-        <p class="text-center text-sm" style="color: var(--texto-secundario);">Gestão de Faturamento e Cálculo de Comissão (8%)</p>
-      </header>
-      <div class="painel-secao" id="gestao-section">
-        <h2 style="text-align: center;">Gestão de Dados</h2>
-
-        <div class="flex justify-end mb-4">
-          <button id="abrir-cargos-btn" class="btn-tertiary" onclick="abrirModalCargos()" style="padding: 5px 10px; font-size: 13px; margin-top: -10px;">
-            Gerenciar Cargos
-          </button>
-        </div>
-
-        <section class="space-y-3 mb-8 p-4" style="border: 1px solid var(--borda-suave); border-radius: 8px; background-color: var(--bg-input);">
-          <h3 style="color: var(--verde-sucesso); font-size: 16px; border-bottom: 1px solid var(--borda-suave); padding-bottom: 8px;">Adicionar Pessoa</h3>
-
-          <div class="input-group">
-            <label for="novo-nome">Nome Completo:</label>
-            <input type="text" id="novo-nome" placeholder="Ex: Maria da Silva">
-          </div>
-
-          <div class="input-group">
-            <label for="data-adicao">Data de Adição (Contratação):</label>
-            <input type="date" id="data-adicao" required>
-          </div>
-
-          <div class="input-group">
-            <label for="novo-cargo">Cargo:</label>
-            <select id="novo-cargo">
-              </select>
-          </div>
-
-          <button id="adicionar-pessoa-btn" class="btn-secondary" onclick="adicionarNovoColaborador()">
-            Adicionar Colaborador
-          </button>
-          <p id="adicionar-msg" class="message"></p>
-        </section>
-
-        <section class="space-y-3">
-          <h3 style="color: var(--texto-principal); font-size: 16px; border-bottom: 1px solid var(--borda-suave); padding-bottom: 8px;">Selecione para Edição</h3>
-          <div class="input-group">
-            <label for="colaborador-selector">Colaborador Ativo:</label>
-            <select id="colaborador-selector" onchange="selecionarColaborador(this.value)">
-              </select>
-          </div>
-        </section>
-      </div>
-
-      <div class="painel-secao" id="detalhes-section">
-        <header class="mb-6">
-          <h1 id="colaborador-nome-display" style="font-size: 22px;">Selecione um Colaborador</h1>
-          <p id="colaborador-cargo-display" class="text-center text-sm" style="color: var(--texto-secundario);">-</p>
-        </header>
-
-        <section class="space-y-4" id="service-detail-section">
-          <h2 id="ganhos-titulo">Detalhes do Faturamento (Período Atual)</h2>
-
-          <div id="servicos-container">
-            </div>
-
-          <button class="btn-secondary" onclick="adicionarServico()" style="padding: 5px 10px; font-size: 12px; margin-left: 0;">+ Adicionar Serviço</button>
-        </section>
-
-        <section class="relatorio-section mt-8">
-          <h2 style="border-bottom: none; margin-bottom: 0;">Comissão e Estatísticas Históricas</h2>
-          <div class="space-y-2">
-
-            <div class="result-line">
-              <span class="font-normal" style="color: var(--texto-secundario);">Data de Adição (Contrato):</span>
-              <span id="data-adicao-display" class="font-mono" style="color: var(--texto-principal);">N/D</span>
-            </div>
-
-            <div class="result-line historico-info">
-              <span class="font-normal" style="color: var(--texto-principal);">Ganhos TOTAIS Desde Adição:</span>
-              <span id="ganho-total-historico" class="font-mono value">R$ 0,00</span>
-            </div>
-
-            <div class="result-line">
-              <span class="font-normal" style="color: var(--texto-secundario);">Período Contabilizado:</span>
-              <span id="meses-desde-adicao" class="font-mono" style="color: var(--texto-principal);">0 meses</span>
-            </div>
-
-            <div class="result-line historico-info">
-              <span class="font-normal" style="color: var(--texto-principal);">MÉDIA de Ganho Mensal:</span>
-              <span id="media-mensal-historico" class="font-mono value">R$ 0,00</span>
-            </div>
-
-            <div class="result-line" style="border-top: 1px solid var(--borda-suave); margin-top: 15px; padding-top: 15px;">
-              <span class="font-normal" style="color: var(--texto-secundario);">Faturamento do Período Atual:</span>
-              <span id="faturamento-individual" class="font-mono" style="color: var(--texto-principal);">R$ 0,00</span>
-            </div>
-
-            <div class="result-line">
-              <span class="font-normal" style="color: var(--texto-secundario);">Comissão de 8% (Período Atual):</span>
-              <span id="comissao-individual" class="font-mono" style="color: var(--texto-principal);">R$ 0,00</span>
-            </div>
-
-            <div class="result-line total-comissao">
-              <span class="text-lg font-semibold">TOTAL GERAL DO MENTOR:</span>
-              <span id="total-comissao" class="value">R$ 0,00</span>
-            </div>
-          </div>
-          <p id="ganho-bruto-total-display" class="message pt-3">Faturamento Bruto Total (Geral): R$ 0,00</p>
-        </section>
-      </div>
-
-      <div class="painel-secao" id="filtro-relatorio-section-wrapper">
-        <h2>Geração e Histórico de Relatórios</h2>
-
-        <section id="periodo-observacoes-section" class="mb-6">
-          <div class="input-group">
-            <label for="data-relatorio">Data do Relatório:</label>
-            <input type="date" id="data-relatorio" onchange="salvarContextoRelatorio()">
-          </div>
-          <div class="input-group">
-            <label for="observacoes-relatorio">Observações do Relatório:</label>
-            <textarea id="observacoes-relatorio" placeholder="Notas importantes sobre o fechamento do mês..." oninput="salvarContextoRelatorio()"></textarea>
-          </div>
-        </section>
-
-        <div id="filtro-relatorio-section">
-          <div class="input-group">
-            <label for="filtro-cargo">Filtrar por Cargo (Ex: Só Borracheiros):</label>
-            <select id="filtro-cargo">
-              </select>
-          </div>
-          <div class="input-group">
-            <label for="filtro-colaborador">Filtrar por Pessoa Específica:</label>
-            <select id="filtro-colaborador">
-              </select>
-          </div>
-        </div>
-
-        <div class="mt-6 flex flex-col md:flex-row gap-4">
-          <button id="gerar-pdf-btn" class="btn-primary flex-1" onclick="gerarEArquivarRelatorio()">
-            Gerar e Arquivar Relatório Mensal
-          </button>
-          <button id="abrir-historico-btn" class="btn-tertiary flex-1" onclick="abrirModalHistorico()">
-            Ver Histórico de Relatórios
-          </button>
-        </div>
-        <p id="pdf-message" class="message">Clique para gerar o relatório e salvar um registro no histórico.</p>
-      </div>
-
-      <div id="relatorio-completo-output" class="painel-secao">
-        </div>
-
-    </div>
-    <div id="cargoModal" class="modal-backdrop">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3>Gerenciar Cargos</h3>
-          <button class="modal-close-btn" onclick="fecharModalCargos()">×</button>
-        </div>
-        <div class="modal-body">
-          <section class="space-y-3 p-4" style="border: 1px solid var(--borda-suave); border-radius: 8px; background-color: var(--bg-input);">
-            <p style="color: var(--texto-secundario); font-size: 14px;">Adicione um novo tipo de cargo para os colaboradores.</p>
-            <div class="input-group flex items-center gap-2">
-              <input type="text" id="novo-cargo-modal-input" placeholder="Ex: Eletricista" style="margin-bottom: 0;">
-              <button id="adicionar-cargo-btn-modal" class="btn-secondary" onclick="adicionarNovoCargo()">
-                + Cargo
-              </button>
-            </div>
-            <p id="cargos-list-display" class="message" style="text-align: left;"></p>
-          </section>
-        </div>
-      </div>
-    </div>
-    <div id="historicoModal" class="modal-backdrop">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3>Histórico de Relatórios Arquivados</h3>
-          <button class="modal-close-btn" onclick="fecharModalHistorico()">×</button>
-        </div>
-        <div class="modal-body">
-          <div id="historico-lista">
-            <p class="message">Carregando histórico...</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script type="module">
-      // --- VARIÁVEIS DE CONFIGURAÇÃO DO PROJETO ---
-      const TAXA_COMISSAO = 0.08;
-      const DADOS_COLLECTION = 'relatorios-comissao';
-      const DADOS_DOCUMENT = 'dados-mentor';
-
-      // --- Variáveis de Estado ---
-      let colaboradores = [];
-      let colaboradorAtivoId = null;
-      let CARGOS = ['Borracheiro', 'Alinhador', 'Mecânico', 'Outro'];
-      let contextoRelatorio = {}; // Novo objeto para datas e observações
-      let db;
-      let authReady = false;
-      let mentorId = 'mentor-id'; // ID temporário que será substituído após auth
-      let historicoCollectionRef;
-      let dadosRef;
-      let updateTimeout; // Para o debounce do input de serviço
-      
-      // Dados mock para inicialização (apenas para o primeiro acesso)
-      const DADOS_MOCK = [
-        { id: 'colab-1', nome: 'Douglas de Oliveira Machado', cargo: 'Alinhador', servicos: [{ servico: 'CAMBAGEM', qtd: 31, valor: 5343.00, id: 's1' }], dataAdicao: '2024-07-01' },
-        { id: 'colab-2', nome: 'Victor Alexandre Paes', cargo: 'Borracheiro', servicos: [{ servico: 'BALANCEAMENTO', qtd: 166, valor: 3799.90, id: 's5' }], dataAdicao: '2024-09-15' }
-      ];
-
-
-      // --- Mapeamento de elementos DOM ---
-      const selectorEl = document.getElementById('colaborador-selector');
-      const nomeDisplayEl = document.getElementById('colaborador-nome-display');
-      const cargoDisplayEl = document.getElementById('colaborador-cargo-display');
-      const comissaoIndividualEl = document.getElementById('comissao-individual');
-      const faturamentoIndividualEl = document.getElementById('faturamento-individual');
-      const totalComissaoEl = document.getElementById('total-comissao');
-      const ganhoBrutoTotalDisplayEl = document.getElementById('ganho-bruto-total-display');
-      const adicionarMsgEl = document.getElementById('adicionar-msg');
-      const servicosContainerEl = document.getElementById('servicos-container');
-      const novoCargoSelectEl = document.getElementById('novo-cargo');
-      const cargosListDisplayEl = document.getElementById('cargos-list-display');
-      const pdfBtnEl = document.getElementById('gerar-pdf-btn');
-      const relatorioOutputEl = document.getElementById('relatorio-completo-output');
-      const cargoModalEl = document.getElementById('cargoModal');
-      const novoCargoModalInputEl = document.getElementById('novo-cargo-modal-input');
-      const historicoModalEl = document.getElementById('historicoModal');
-      const historicoListaEl = document.getElementById('historico-lista');
-
-      const filtroCargoEl = document.getElementById('filtro-cargo');
-      const filtroColaboradorEl = document.getElementById('filtro-colaborador');
-
-      // Elementos de contexto do relatório (ATUALIZADOS)
-      const dataRelatorioEl = document.getElementById('data-relatorio');
-      const observacoesRelatorioEl = document.getElementById('observacoes-relatorio');
-
-      // Novos elementos de input/display para a data de adição/estatísticas
-      const dataAdicaoInputEl = document.getElementById('data-adicao');
-      const ganhoTotalHistoricoEl = document.getElementById('ganho-total-historico');
-      const mediaMensalHistoricoEl = document.getElementById('media-mensal-historico');
-      const dataAdicaoDisplayEl = document.getElementById('data-adicao-display');
-      const mesesDesdeAdicaoEl = document.getElementById('meses-desde-adicao');
-
-
-      // --- FIREBASE IMPORTS e INICIALIZAÇÃO ---
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-      import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-      import { getFirestore, doc, setDoc, onSnapshot, collection, getDocs, addDoc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-      // ✅ PASSO 1: CONFIGURAÇÃO DO FIREBASE (COPIADO DO SEU CONSOLE)
-      const firebaseConfig = {
-        apiKey: "AIzaSyDSe9MpVHGT7vEM7KRB2sxg-425SDpG4S4",
-        authDomain: "relatorio-29dd2.firebaseapp.com",
-        projectId: "relatorio-29dd2",
-        storageBucket: "relatorio-29dd2.firebasestorage.app",
-        messagingSenderId: "256113282650",
-        appId: "1:256113282650:web:e9c55edddbd4ab26f51263",
-        measurementId: "G-4WMWHDYZTN"
-      };
-
-      // ✅ PASSO 2: ID DO APP CANVAS (COPIADO DO ERRO)
-      const CANVAS_APP_ID = "c_41bd86e8635b0174_relatorio_com_dark.html-157";
-      // ----------------------------------------------------
-
-
-      const getDocRef = (appId, userId) => doc(db, `artifacts/${appId}/users/${userId}/${DADOS_COLLECTION}/${DADOS_DOCUMENT}`);
-      const getHistoricoColRef = (appId, userId) => collection(db, `artifacts/${appId}/users/${userId}/${DADOS_COLLECTION}/${DADOS_DOCUMENT}`, `historico-mensal`);
-
-
-      const performAuth = async () => {
-        try {
-          const app = initializeApp(firebaseConfig);
-          db = getFirestore(app);
-          const auth = getAuth(app);
-
-          // Tenta Login Anônimo
-          const userCredential = await signInAnonymously(auth);
-          mentorId = userCredential.user.uid;
-          authReady = true;
-
-          console.log("✅ Autenticação Firebase Anônima SUCEDIDA. User ID:", mentorId);
-
-          // Define as referências usando o ID do Canvas e o ID do usuário autenticado
-          dadosRef = getDocRef(CANVAS_APP_ID, mentorId);
-          historicoCollectionRef = getHistoricoColRef(CANVAS_APP_ID, mentorId);
-
-          iniciarMonitoramentoFirestore();
-
-        } catch (error) {
-          console.error("❌ Erro de Autenticação Firebase:", error);
-
-          const errorBox = document.getElementById('critical-error-box');
-          const errorMessage = document.getElementById('critical-error-message');
-          
-          errorMessage.innerHTML = `Ocorreu um erro ao conectar ao Firebase, mas o aplicativo continuará funcionando com dados de demonstração. <br>Mensagem: <strong>${error.message}</strong>`;
-          errorBox.style.display = 'block';
-
-          // Fallback para dados mock
-          carregarDadosMock();
+        .app-title {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
         }
-      };
 
-      performAuth();
-
-
-      // --- Funções de Persistência no Firestore ---
-
-      const salvarDados = async () => {
-        if (!authReady || !dadosRef) return;
-        try {
-          const dataToSave = {
-            cargos: CARGOS,
-            colaboradores: colaboradores,
-            contexto: contextoRelatorio
-          };
-          await setDoc(dadosRef, dataToSave, { merge: true });
-        } catch (e) {
-          console.error("Erro ao salvar dados no Firestore:", e);
+        .app-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 24px;
         }
-      };
 
-      window.salvarContextoRelatorio = () => {
-        contextoRelatorio.dataRelatorio = dataRelatorioEl.value;
-        contextoRelatorio.observacoes = observacoesRelatorioEl.value;
-        salvarDados();
-      };
+        /* Cards Modernos */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-medium);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            position: relative;
+        }
 
-      const iniciarMonitoramentoFirestore = () => {
-        onSnapshot(dadosRef, (docSnapshot) => {
-          if (docSnapshot.exists()) {
-            const data = docSnapshot.data();
+        .card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
 
-            if (data.cargos) {
-              CARGOS = data.cargos;
-              popularCargosSelector();
-              popularFiltroCargo();
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-medium);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title i {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        /* Grids Responsivos */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
             }
-            if (data.colaboradores) {
-              colaboradores = data.colaboradores;
-              popularSelector(); // Chave para preencher a 'aba de opções'
-              popularFiltroColaborador();
-              calcularRelatorioTotal();
+        }
 
-              // CRÍTICO: Re-renderiza a tabela do colaborador ativo se houver um
-              if (colaboradorAtivoId) {
-                const colaborador = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
-                if (colaborador) renderizarServicos(colaborador);
-              }
+        /* Formulários Modernos */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-input);
+            border: 1.5px solid var(--border-medium);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: all var(--transition-fast);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Botões Modernos */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: none;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
             }
-            if (data.contexto) {
-              contextoRelatorio = data.contexto;
-              dataRelatorioEl.value = contextoRelatorio.dataRelatorio || '';
-              observacoesRelatorioEl.value = contextoRelatorio.observacoes || '';
+            100% {
+                transform: scale(40, 40);
+                opacity: 0;
             }
-          } else {
-            // Inicializa com dados mock se o login funcionou mas o documento está vazio
-            if (authReady) {
-              console.log("Documento do Firestore vazio. Inicializando com dados mock e salvando.");
-              colaboradores = DADOS_MOCK;
-              CARGOS = ['Borracheiro', 'Alinhador', 'Mecânico', 'Outro'];
-              salvarDados(); // Salva os mocks no Firestore
-            } else {
-              // Se o login falhou, o fallback foi chamado anteriormente
-              console.log("Aguardando autenticação para carregar dados.");
-            }
-          }
-        }, (error) => {
-          console.error("Erro ao monitorar o Firestore:", error);
-        });
-      };
-
-      const carregarDadosMock = () => {
-        // Fallback robusto se a autenticação falhar
-        colaboradores = DADOS_MOCK;
-        CARGOS = ['Borracheiro', 'Alinhador', 'Mecânico', 'Outro'];
-        popularCargosSelector();
-        popularFiltroCargo();
-        popularSelector(); // CRÍTICO: Preenche o seletor imediatamente
-        popularFiltroColaborador();
-        calcularRelatorioTotal();
-      };
-
-
-      // --- Funções de Utilidade e Interface ---
-
-      const formatarMoeda = (valor) => {
-        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor || 0);
-      };
-
-      // --- Funções do Modal de Cargos ---
-
-      window.abrirModalCargos = () => {
-        cargoModalEl.classList.add('open');
-        popularCargosSelector();
-      };
-
-      window.fecharModalCargos = () => {
-        cargoModalEl.classList.remove('open');
-      };
-
-      cargoModalEl.addEventListener('click', (e) => {
-        if (e.target === cargoModalEl) {
-          fecharModalCargos();
-        }
-      });
-
-
-      // --- Gestão de Cargos ---
-
-      window.adicionarNovoCargo = () => {
-        const novoCargo = novoCargoModalInputEl.value.trim();
-
-        if (novoCargo.length < 3) {
-          alert("Nome do cargo inválido.");
-          return;
-        }
-        if (CARGOS.map(c => c.toLowerCase()).includes(novoCargo.toLowerCase())) {
-          alert("Este cargo já existe.");
-          return;
         }
 
-        CARGOS.push(novoCargo);
-        salvarDados();
-        popularCargosSelector();
-        popularFiltroCargo();
-        novoCargoModalInputEl.value = "";
-        alert(`Cargo "${novoCargo}" adicionado!`);
-      };
-
-      const popularCargosSelector = () => {
-        novoCargoSelectEl.innerHTML = '';
-        CARGOS.forEach(cargo => {
-          const option = document.createElement('option');
-          option.value = cargo;
-          option.textContent = cargo;
-          novoCargoSelectEl.appendChild(option);
-        });
-        cargosListDisplayEl.textContent = `Cargos disponíveis: ${CARGOS.join(', ')}`;
-      };
-
-
-      // --- Cálculos ---
-
-      const calcularTotalFaturadoColaborador = (colaborador) => {
-        if (!colaborador || !colaborador.servicos) return 0;
-        return colaborador.servicos.reduce((sum, s) => sum + (parseFloat(s.valor) || 0), 0);
-      }
-
-      /**
-       * Calcula o ganho total e a média mensal desde a data de adição.
-       */
-      const calcularEstatisticasHistoricas = (colaborador) => {
-        const dataAdicaoISO = colaborador.dataAdicao;
-        if (!dataAdicaoISO) {
-          return { totalGanho: 0, mesesDesdeAdicao: 0, mediaMensal: 0 };
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
-        const totalGanho = colaborador.servicos.reduce((total, s) => total + (parseFloat(s.valor) || 0), 0);
-        const dataInicial = new Date(dataAdicaoISO + 'T00:00:00'); // Adiciona T00:00:00 para forçar UTC
-        const hoje = new Date();
-
-        let meses = (hoje.getFullYear() - dataInicial.getFullYear()) * 12;
-        meses -= dataInicial.getMonth();
-        meses += hoje.getMonth();
-
-        // Contamos o mês atual (meses + 1), garantindo que seja no mínimo 1.
-        let mesesContabilizados = Math.max(1, meses + 1);
-
-        const mediaMensal = totalGanho / mesesContabilizados;
-
-        return {
-          totalGanho: totalGanho,
-          mesesDesdeAdicao: mesesContabilizados,
-          mediaMensal: mediaMensal
-        };
-      };
-
-
-      const calcularRelatorioTotal = () => {
-        let totalGanhoBruto = 0;
-        let totalComissaoMentor = 0;
-
-        colaboradores.forEach(colab => {
-          const ganho = calcularTotalFaturadoColaborador(colab);
-          totalGanhoBruto += ganho;
-          totalComissaoMentor += ganho * TAXA_COMISSAO;
-        });
-
-        totalComissaoEl.textContent = formatarMoeda(totalComissaoMentor);
-        ganhoBrutoTotalDisplayEl.textContent = `Faturamento Bruto Total (Geral): ${formatarMoeda(totalGanhoBruto)}`;
-
-        // Atualiza o resumo individual, inclusive as estatísticas históricas
-        const colab = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
-        if (colab) {
-          const ganho = calcularTotalFaturadoColaborador(colab);
-          faturamentoIndividualEl.textContent = formatarMoeda(ganho);
-          comissaoIndividualEl.textContent = formatarMoeda(ganho * TAXA_COMISSAO);
-
-          const stats = calcularEstatisticasHistoricas(colab);
-          ganhoTotalHistoricoEl.textContent = formatarMoeda(stats.totalGanho);
-          mediaMensalHistoricoEl.textContent = formatarMoeda(stats.mediaMensal);
-          dataAdicaoDisplayEl.textContent = colab.dataAdicao ? new Date(colab.dataAdicao + 'T00:00:00').toLocaleDateString('pt-BR') : 'N/D';
-          mesesDesdeAdicaoEl.textContent = `${stats.mesesDesdeAdicao} meses`;
-        } else {
-          // Limpa as novas estatísticas se ninguém estiver selecionado
-          faturamentoIndividualEl.textContent = "R$ 0,00";
-          comissaoIndividualEl.textContent = "R$ 0,00";
-          ganhoTotalHistoricoEl.textContent = "R$ 0,00";
-          mediaMensalHistoricoEl.textContent = "R$ 0,00";
-          dataAdicaoDisplayEl.textContent = "N/D";
-          mesesDesdeAdicaoEl.textContent = "0 meses";
-        }
-      };
-
-      // --- Funções de Manipulação da Interface (Colaboradores e Serviços) ---
-
-      const popularSelector = () => {
-        selectorEl.innerHTML = '<option value="">-- Selecione --</option>';
-        colaboradores.forEach(colab => {
-          const option = document.createElement('option');
-          option.value = colab.id;
-          option.textContent = `${colab.nome} (${colab.cargo})`;
-          selectorEl.appendChild(option);
-        });
-
-        // 1. Tenta manter o ativo, se houver
-        let idToSelect = colaboradorAtivoId;
-
-        // 2. Se o ativo não existe ou é null, tenta o primeiro
-        if (!idToSelect && colaboradores.length > 0) {
-          idToSelect = colaboradores[0].id;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
         }
 
-        // 3. Atualiza o seletor DOM e chama a função de detalhes
-        if (idToSelect) {
-          selectorEl.value = idToSelect;
-          colaboradorAtivoId = idToSelect; // Garante que o estado JS reflita o DOM
-        }
-        
-        selecionarColaborador(idToSelect); // Chama a função que renderiza os detalhes
-      };
-
-      window.selecionarColaborador = (id) => {
-        colaboradorAtivoId = id;
-        const colaborador = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
-
-        if (colaborador) {
-          nomeDisplayEl.textContent = colaborador.nome;
-          cargoDisplayEl.textContent = colaborador.cargo;
-          renderizarServicos(colaborador);
-          pdfBtnEl.disabled = false;
-          document.getElementById('pdf-message').textContent = 'Pronto para gerar o relatório.';
-        } else {
-          nomeDisplayEl.textContent = "Selecione um Colaborador";
-          cargoDisplayEl.textContent = "-";
-          servicosContainerEl.innerHTML = '<p class="message" style="color: var(--texto-secundario);">Nenhum colaborador selecionado. Adicione ou selecione um para ver os detalhes de faturamento.</p>';
-          pdfBtnEl.disabled = true;
-          document.getElementById('pdf-message').textContent = 'Selecione um colaborador para habilitar.';
-        }
-        calcularRelatorioTotal(); // Atualiza os dados, incluindo as estatísticas históricas
-      };
-
-      window.adicionarNovoColaborador = () => {
-        const nomeInput = document.getElementById('novo-nome');
-        const cargoInput = document.getElementById('novo-cargo');
-        const dataAdicaoInput = document.getElementById('data-adicao');
-
-        const nome = nomeInput.value.trim();
-        const cargo = cargoInput.value;
-        const dataAdicao = dataAdicaoInput.value;
-
-        if (nome.length < 3 || !dataAdicao) {
-          alert("O nome ou a data de adição estão incompletos!");
-          return;
+        .btn-primary:active {
+            transform: translateY(0);
         }
 
-        const novoId = `colab-${Date.now()}`;
-
-        const novoColaborador = {
-          id: novoId,
-          nome: nome,
-          cargo: cargo,
-          servicos: [],
-          dataAdicao: dataAdicao
-        };
-
-        colaboradores.push(novoColaborador);
-        salvarDados();
-
-        nomeInput.value = "";
-        cargoInput.value = CARGOS[0] || 'Outro';
-        dataAdicaoInput.value = '';
-
-        adicionarMsgEl.textContent = `Colaborador ${nome} adicionado com sucesso!`;
-
-        colaboradorAtivoId = novoId;
-        setTimeout(() => adicionarMsgEl.textContent = '', 3000);
-      };
-
-      // --- Gestão de Serviços Dinâmicos ---
-
-      const renderizarServicos = (colaborador) => {
-        let html = `
-            <table class="service-table">
-                <thead>
-                    <tr>
-                        <th style="width: 50%;">SERVIÇO</th>
-                        <th style="width: 15%;">QTD. (Serviços)</th>
-                        <th style="width: 25%;">VALOR FATURADO</th>
-                        <th style="width: 10%;"></th>
-                    </tr>
-                </thead>
-                <tbody id="servicos-tbody">
-        `;
-
-        colaborador.servicos.forEach(servico => {
-          const valorLimpo = (parseFloat(servico.valor) || 0).toFixed(2);
-
-          html += `
-                <tr data-service-id="${servico.id}">
-                    <td>
-                        <input type="text" value="${servico.servico}" placeholder="Ex: ALINHAMENTO"
-                            class="service-name-input" id="service-name-${servico.id}" oninput="atualizarServicoDetalhes('${servico.id}', 'servico', this.value)">
-                    </td>
-                    <td>
-                        <input type="number" value="${servico.qtd}" min="0"
-                            class="service-qty-input" id="service-qty-${servico.id}" oninput="atualizarServicoDetalhes('${servico.id}', 'qtd', this.value)">
-                    </td>
-                    <td style="position: relative;">
-                        <span class="currency-symbol" style="position: absolute; left: 10px; top: 12px; color: var(--texto-secundario);">R$</span>
-                        <input type="number" value="${valorLimpo}" min="0" step="0.01"
-                            class="service-value-input" id="service-value-${servico.id}" style="padding-left: 30px;" oninput="atualizarServicoDetalhes('${servico.id}', 'valor', this.value)">
-                    </td>
-                    <td>
-                        <button class="btn-destructive" onclick="removerServico('${servico.id}')">×</button>
-                    </td>
-                </tr>
-            `;
-        });
-
-        html += `
-                </tbody>
-            </table>
-        `;
-
-        servicosContainerEl.innerHTML = html;
-      };
-
-      window.adicionarServico = () => {
-        const colaborador = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
-        if (!colaborador) {
-          alert("Selecione um colaborador primeiro.");
-          return;
+        .btn-success {
+            background: linear-gradient(135deg, var(--secondary) 0%, #0da271 100%);
+            color: white;
         }
 
-        const novoServico = {
-          id: `serv-${Date.now()}-${colaborador.servicos.length}`, // ID mais exclusivo
-          servico: 'Novo Serviço',
-          qtd: 1,
-          valor: 0.00
-        };
-
-        colaborador.servicos.push(novoServico);
-        salvarDados();
-      };
-
-      window.removerServico = (serviceId) => {
-        const colaborador = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
-        if (!colaborador) return;
-
-        colaborador.servicos = colaborador.servicos.filter(s => String(s.id) !== String(serviceId));
-        salvarDados();
-      };
-
-      window.atualizarServicoDetalhes = (serviceId, campo, valor) => {
-        const colaborador = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
-        if (!colaborador) return;
-
-        const servico = colaborador.servicos.find(s => String(s.id) === String(serviceId));
-        if (!servico) return;
-
-        servico[campo] = (campo === 'servico') ? valor : (parseFloat(valor) || 0);
-
-        clearTimeout(updateTimeout);
-        updateTimeout = setTimeout(() => {
-          salvarDados();
-        }, 500);
-
-        calcularRelatorioTotal();
-      };
-
-      // --- Funções de Filtro ---
-
-      const popularFiltroCargo = () => {
-        filtroCargoEl.innerHTML = '<option value="TODOS">Todos os Cargos</option>';
-        [...new Set(colaboradores.map(c => c.cargo))].sort().forEach(cargo => {
-          const option = document.createElement('option');
-          option.value = cargo;
-          option.textContent = cargo;
-          filtroCargoEl.appendChild(option);
-        });
-      };
-
-      const popularFiltroColaborador = () => {
-        filtroColaboradorEl.innerHTML = '<option value="TODOS">Todos os Colaboradores</option>';
-        colaboradores.sort((a, b) => a.nome.localeCompare(b.nome)).forEach(colab => {
-          const option = document.createElement('option');
-          option.value = colab.id;
-          option.textContent = `${colab.nome} (${colab.cargo})`;
-          filtroColaboradorEl.appendChild(option);
-        });
-      };
-
-
-      // --- FUNÇÕES DO HISTÓRICO DE RELATÓRIOS ---
-
-      window.fecharModalHistorico = () => {
-        historicoModalEl.classList.remove('open');
-      };
-
-      historicoModalEl.addEventListener('click', (e) => {
-        if (e.target === historicoModalEl) {
-          fecharModalHistorico();
-        }
-      });
-
-      window.abrirModalHistorico = async () => {
-        if (!authReady) {
-          alert("Aguarde a conexão com o Firebase ser estabelecida. O histórico não está disponível offline.");
-          return;
-        }
-        historicoListaEl.innerHTML = '<p class="message" style="text-align: center;">Carregando histórico...</p>';
-        historicoModalEl.classList.add('open');
-
-        try {
-          const snapshot = await getDocs(historicoCollectionRef);
-
-          if (snapshot.empty) {
-            historicoListaEl.innerHTML = '<p class="message" style="text-align: center;">Nenhum relatório arquivado ainda.</p>';
-            return;
-          }
-
-          let relatorios = [];
-          snapshot.forEach(doc => {
-            relatorios.push({ id: doc.id, ...doc.data() });
-          });
-
-          relatorios.sort((a, b) => new Date(b.dataGeracaoISO) - new Date(a.dataGeracaoISO));
-
-          let html = '';
-          relatorios.forEach(relatorio => {
-            const dataGeracao = relatorio.dataRelatorio || relatorio.dataGeracao || 'N/D';
-            const filtro = relatorio.filtroAplicado || 'Geral';
-            const totalComissao = formatarMoeda(relatorio.totalComissao);
-
-            html += `
-                    <div class="historico-item">
-                        <div class="historico-item-info" onclick="visualizarRelatorioHistorico('${relatorio.id}')">
-                            <strong>${dataGeracao}</strong> <span style="font-size: 11px;">(${filtro})</span>
-                        </div>
-                        <strong style="color: var(--verde-sucesso);">${totalComissao}</strong>
-                        <button class="btn-historico-delete" onclick="event.stopPropagation(); excluirRelatorioHistorico('${relatorio.id}')">X</button>
-                    </div>
-                `;
-          });
-
-          historicoListaEl.innerHTML = html;
-
-        } catch (error) {
-          console.error("Erro ao carregar histórico:", error);
-          historicoListaEl.innerHTML = '<p class="message" style="color: var(--vermelho-erro); text-align: center;">Erro ao carregar o histórico.</p>';
-        }
-      };
-
-      window.gerarEArquivarRelatorio = async () => {
-        if (!authReady) {
-          alert("Aguarde a conexão com o Firebase ser estabelecida. O arquivamento não está disponível offline.");
-          return;
-        }
-        const filtroCargo = filtroCargoEl.value;
-        const filtroColaboradorId = filtroColaboradorEl.value;
-
-        // 1. Filtragem
-        let colaboradoresFiltrados = colaboradores;
-
-        if (filtroColaboradorId !== 'TODOS') {
-          colaboradoresFiltrados = colaboradores.filter(c => c.id === filtroColaboradorId);
-        } else if (filtroCargo !== 'TODOS') {
-          colaboradoresFiltrados = colaboradores.filter(c => c.cargo === filtroCargo);
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #f59e0b 100%);
+            color: var(--bg-primary);
         }
 
-        const totalComissao = colaboradoresFiltrados.reduce((total, c) => total + calcularTotalFaturadoColaborador(c) * TAXA_COMISSAO, 0);
-
-        if (colaboradoresFiltrados.length === 0) {
-          alert("Não é possível gerar um relatório com os filtros aplicados (0 colaboradores encontrados).");
-          return;
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+            color: white;
         }
 
-        // 2. Prepara os dados para salvar
-        const relatorioSnapshot = {
-          dataGeracao: new Date().toLocaleDateString('pt-BR'),
-          dataGeracaoISO: new Date().toISOString(),
-          filtroAplicado: filtroColaboradorId !== 'TODOS' ? `Colaborador: ${colaboradoresFiltrados[0].nome}` :
-            (filtroCargo !== 'TODOS' ? `Cargo: ${filtroCargo}` : 'Todos (Geral)'),
-          totalComissao: totalComissao,
-          colaboradoresDetalhes: colaboradoresFiltrados,
-          dataRelatorio: contextoRelatorio.dataRelatorio || new Date().toLocaleDateString('pt-BR'),
-          observacoes: contextoRelatorio.observacoes || 'Nenhuma observação.'
-        };
-
-        // 3. Arquiva no Firestore
-        try {
-          const addRef = await addDoc(historicoCollectionRef, relatorioSnapshot);
-          document.getElementById('pdf-message').textContent = `Relatório arquivado com sucesso no histórico! ID: ${addRef.id}`;
-        } catch (e) {
-          document.getElementById('pdf-message').textContent = `Erro ao salvar no histórico: ${e.message}`;
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border-light);
+            color: var(--text-secondary);
         }
 
-        // 4. Gera a visualização na tela
-        gerarRelatorioVisual(relatorioSnapshot);
-      };
-
-      window.visualizarRelatorioHistorico = async (docId) => {
-        if (!authReady) {
-            alert("Aguarde a conexão com o Firebase ser estabelecida.");
-            return;
-        }
-        fecharModalHistorico();
-
-        try {
-          const docRefHistorico = doc(historicoCollectionRef, docId);
-          const docSnapshot = await getDoc(docRefHistorico);
-
-          if (!docSnapshot.exists()) {
-            alert('Relatório histórico não encontrado.');
-            return;
-          }
-
-          const relatorio = docSnapshot.data();
-          gerarRelatorioVisual(relatorio);
-
-          const msg = document.getElementById('pdf-message');
-          msg.textContent = `Visualizando relatório arquivado de ${relatorio.dataGeracao}.`;
-
-        } catch (error) {
-          console.error("Erro ao carregar relatório histórico:", error);
-          alert("Erro ao carregar relatório. Verifique o console.");
-        }
-      };
-
-      window.excluirRelatorioHistorico = async (docId) => {
-        if (!authReady) {
-            alert("Aguarde a conexão com o Firebase.");
-            return;
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
         }
 
-        if (!confirm("Tem certeza que deseja EXCLUIR este relatório permanentemente?")) {
-            return;
+        .btn-sm {
+            padding: 10px 20px;
+            font-size: 14px;
         }
 
-        try {
-          const docRefHistorico = doc(historicoCollectionRef, docId);
-          await deleteDoc(docRefHistorico);
-
-          // Atualiza a lista no modal (reabre)
-          abrirModalHistorico();
-
-        } catch (error) {
-          console.error("Erro ao excluir relatório:", error);
-          alert("Erro ao excluir. Tente novamente.");
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: var(--radius-full);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
-      };
 
+        /* Tabela Moderna */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 16px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-medium);
+        }
 
-      // Função para gerar a visualização do relatório (usada tanto para novo quanto para histórico)
-      const gerarRelatorioVisual = (relatorio) => {
-        const { colaboradoresDetalhes, totalComissao, dataGeracao, filtroAplicado, dataRelatorio, observacoes } = relatorio;
+        .data-table thead {
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+        }
 
-        let html = `
-            <h3>Relatório Detalhado de Comissão (Visualização para Impressão)</h3>
-            <p style="color: var(--texto-secundario);">Relatório referente a: ${dataRelatorio || dataGeracao}</p>
-            <p style="color: var(--texto-secundario); font-weight: bold;">Filtro Aplicado: ${filtroAplicado}</p>
+        .data-table th {
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-medium);
+        }
 
-            <div class="relatorio-detalhe">
-                <h4>Contexto do Relatório</h4>
-                <p><strong>Observações:</strong> ${observacoes || 'Nenhuma'}</p>
-            </div>
+        .data-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border-medium);
+            background: var(--bg-card);
+        }
 
-            <div class="relatorio-section mt-4 mb-8" style="border-top: 2px solid var(--verde-sucesso);">
-                <h2 style="border-bottom: none; margin-bottom: 0;">Resumo Financeiro do Mentor</h2>
-                <div class="result-line total-comissao" style="border-top: none;">
-                    <span class="text-lg font-semibold">COMISSÃO TOTAL DO MENTOR (8%):</span>
-                    <span class="value" style="font-size: 28px;">${formatarMoeda(totalComissao)}</span>
-                </div>
-            </div>
-        `;
-
-        colaboradoresDetalhes.forEach(colab => {
-          const faturamentoIndividual = calcularTotalFaturadoColaborador(colab);
-          const comissaoIndividual = faturamentoIndividual * TAXA_COMISSAO;
-          const totalServicos = colab.servicos.length;
-
-          const stats = calcularEstatisticasHistoricas(colab);
-
-          html += `
-                <div class="relatorio-detalhe">
-                    <h4>${colab.nome} (${colab.cargo})</h4>
-                    <p><strong>Data de Adição:</strong> ${colab.dataAdicao ? new Date(colab.dataAdicao + 'T00:00:00').toLocaleDateString('pt-BR') : 'N/D'}</p>
-
-                    <h5 style="color: var(--laranja-aviso); font-size: 14px; margin-top: 15px; border-bottom: 1px dotted var(--borda-suave); padding-bottom: 5px;">Estatísticas Históricas:</h5>
-                    <p><strong>Faturamento TOTAL (desde a adição):</strong> ${formatarMoeda(stats.totalGanho)}</p>
-                    <p><strong>Média de Ganho Mensal:</strong> ${formatarMoeda(stats.mediaMensal)} (${stats.mesesDesdeAdicao} meses)</p>
-
-                    <h5 style="color: var(--texto-principal); font-size: 14px; margin-top: 15px; border-bottom: 1px dotted var(--borda-suave); padding-bottom: 5px;">Ganhos do Período do Relatório:</h5>
-                    <p><strong>Faturamento Total (Período):</strong> ${formatarMoeda(faturamentoIndividual)}</p>
-                    <p class="comissao-individual"><strong>Comissão Individual (8%):</strong> ${formatarMoeda(comissaoIndividual)}</p>
-                    <p><strong>Total de Serviços (Período):</strong> ${totalServicos}</p>
-
-
-                    <h5 style="color: var(--texto-principal); font-size: 14px; margin-top: 15px; border-bottom: 1px dotted var(--borda-suave); padding-bottom: 5px;">Detalhes dos Serviços no Período:</h5>
-                    <table class="service-table" style="font-size: 12px;">
-                        <thead>
-                            <tr>
-                                <th style="width: 50%;">SERVIÇO</th>
-                                <th style="width: 20%;">QTD.</th>
-                                <th style="width: 30%;">VALOR FATURADO</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-
-          colab.servicos.forEach(servico => {
-            html += `
-                    <tr>
-                        <td style="text-align: left;">${servico.servico}</td>
-                        <td>${servico.qtd}</td>
-                        <td>${formatarMoeda(servico.valor)}</td>
-                    </tr>
-                `;
-          });
-
-          html += `
-                        </tbody>
-                    </table>
-                    <div style="text-align: right; margin-top: 10px;">
-                        <button class="btn-primary" onclick="window.print()" style="border: none;">Imprimir Relatório</button>
-                    </div>
-                </div>
-            `;
-        });
-
-        html += `
-            <div style="text-align: right; margin-top: 10px; padding-top: 20px; border-top: 1px solid var(--borda-suave);">
-                <button class="btn-acao" onclick="window.print()" style="background-color: var(--verde-sucesso); color: var(--bg-principal); border: none;">Imprimir Relatório Completo</button>
-            </div>
-        `;
-
-        relatorioOutputEl.innerHTML = html;
-        relatorioOutputEl.style.display = 'block';
-      };
-      
-      // Expõe as funções globais (necessário para o HTML chamar funções dentro do módulo)
-      window.adicionarNovoCargo = adicionarNovoCargo;
-      window.abrirModalCargos = abrirModalCargos;
-      window.fecharModalCargos = fecharModalCargos;
-      window.adicionarNovoColaborador = adicionarNovoColaborador;
-      window.adicionarServico = adicionarServico;
-      window.removerServico = removerServico;
-      window.atualizarServicoDetalhes = atualizarServicoDetalhes;
-      window.gerarEArquivarRelatorio = gerarEArquivarRelatorio;
-      window.abrirModalHistorico = abrirModalHistorico;
-      window.fecharModalHistorico = fecharModalHistorico;
-      window.visualizarRelatorioHistorico = visualizarRelatorioHistorico;
-      window.excluirRelatorioHistorico = excluirRelatorioHistorico;
-      
-    </script>
-  </body>
-</html>
+        .data-table tbody tr {
+            transition: all var(--
