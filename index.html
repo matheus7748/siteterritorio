@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* Paleta de cores moderna - Dark Mode Profissional */
+            /* Paleta de cores moderna */
             --primary: #6366f1;
             --primary-dark: #4f46e5;
             --primary-light: #818cf8;
@@ -57,13 +57,17 @@
             box-sizing: border-box;
         }
 
+        html {
+            font-size: 16px;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
-            padding: 20px;
+            padding: 16px;
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 20%),
                 radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
@@ -71,18 +75,18 @@
 
         /* Layout Principal */
         .app-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
         }
 
-        /* Header Estilizado */
+        /* Header Estilizado - Responsivo */
         .app-header {
             background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
             border-radius: var(--radius-xl);
-            padding: 32px 40px;
+            padding: 24px;
             border: 1px solid var(--border-light);
             box-shadow: var(--shadow-lg);
             position: relative;
@@ -94,8 +98,8 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             background: linear-gradient(45deg, var(--primary) 0%, transparent 70%);
             opacity: 0.1;
             border-radius: 0 0 0 100px;
@@ -107,20 +111,24 @@
         }
 
         .app-title {
-            font-size: 32px;
+            font-size: clamp(24px, 5vw, 32px);
             font-weight: 700;
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-light) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .app-subtitle {
-            font-size: 16px;
+            font-size: clamp(14px, 3vw, 16px);
             color: var(--text-secondary);
             font-weight: 400;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         /* Cards Modernos */
@@ -128,7 +136,7 @@
             background: var(--bg-card);
             border-radius: var(--radius-lg);
             border: 1px solid var(--border-medium);
-            padding: 32px;
+            padding: clamp(20px, 4vw, 32px);
             box-shadow: var(--shadow-md);
             transition: all var(--transition-normal);
             position: relative;
@@ -142,49 +150,85 @@
 
         .card-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
             padding-bottom: 16px;
             border-bottom: 1px solid var(--border-medium);
         }
 
+        @media (min-width: 768px) {
+            .card-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
         .card-title {
-            font-size: 20px;
+            font-size: clamp(18px, 4vw, 20px);
             font-weight: 600;
             color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .card-title i {
             color: var(--primary);
-            font-size: 20px;
+            font-size: clamp(18px, 4vw, 20px);
         }
 
         /* Grids Responsivos */
+        .grid-1 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
         .grid-2 {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
 
         .grid-3 {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
 
-        @media (max-width: 768px) {
-            .grid-2, .grid-3 {
-                grid-template-columns: 1fr;
+        .grid-4 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 640px) {
+            .grid-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .grid-4 {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        /* Formulários Modernos */
+        @media (min-width: 1024px) {
+            .grid-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .grid-4 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Formulários Modernos - Mobile First */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .form-label {
@@ -201,14 +245,22 @@
         .form-select,
         .form-textarea {
             width: 100%;
-            padding: 14px 16px;
+            padding: 14px;
             background: var(--bg-input);
             border: 1.5px solid var(--border-medium);
             border-radius: var(--radius-md);
             color: var(--text-primary);
-            font-size: 15px;
+            font-size: 16px; /* Tamanho maior para mobile */
             font-family: 'Inter', sans-serif;
             transition: all var(--transition-fast);
+            -webkit-appearance: none; /* Remove estilo padrão iOS */
+            appearance: none;
+        }
+
+        /* Aumenta área de toque para mobile */
+        .form-input,
+        .form-select {
+            min-height: 48px;
         }
 
         .form-input:focus,
@@ -223,15 +275,15 @@
             color: var(--text-muted);
         }
 
-        /* Botões Modernos */
+        /* Botões Modernos - Mobile Friendly */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 14px 28px;
+            padding: 14px 20px;
             border-radius: var(--radius-md);
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
@@ -240,35 +292,21 @@
             outline: none;
             position: relative;
             overflow: hidden;
+            text-align: center;
+            min-height: 48px; /* Altura mínima para toque */
+            width: 100%; /* Botões ocupam toda largura no mobile */
         }
 
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            border-radius: 100%;
-            transform: scale(1, 1) translate(-50%);
-            transform-origin: 50% 50%;
-        }
-
-        .btn:focus:not(:active)::after {
-            animation: ripple 1s ease-out;
-        }
-
-        @keyframes ripple {
-            0% {
-                transform: scale(0, 0);
-                opacity: 0.5;
+        @media (min-width: 640px) {
+            .btn {
+                width: auto;
+                padding: 14px 28px;
             }
-            100% {
-                transform: scale(40, 40);
-                opacity: 0;
-            }
+        }
+
+        /* Efeito de clique para mobile */
+        .btn:active {
+            transform: scale(0.98);
         }
 
         .btn-primary {
@@ -280,10 +318,6 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
         }
 
         .btn-success {
@@ -314,13 +348,14 @@
         }
 
         .btn-sm {
-            padding: 10px 20px;
+            padding: 10px 16px;
             font-size: 14px;
+            min-height: 40px;
         }
 
         .btn-icon {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             padding: 0;
             border-radius: var(--radius-full);
             display: inline-flex;
@@ -328,15 +363,35 @@
             justify-content: center;
         }
 
-        /* Tabela Moderna */
+        /* Container de botões para mobile */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        @media (min-width: 640px) {
+            .btn-group {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Tabela Moderna - Responsiva */
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* Scroll suave no iOS */
+            margin: 20px 0;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-medium);
+        }
+
         .data-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            margin-top: 16px;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            border: 1px solid var(--border-medium);
+            min-width: 600px; /* Largura mínima para manter legibilidade */
         }
 
         .data-table thead {
@@ -344,20 +399,22 @@
         }
 
         .data-table th {
-            padding: 18px 20px;
+            padding: 16px;
             text-align: left;
             font-weight: 600;
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             border-bottom: 1px solid var(--border-medium);
+            white-space: nowrap;
         }
 
         .data-table td {
-            padding: 18px 20px;
+            padding: 16px;
             border-bottom: 1px solid var(--border-medium);
             background: var(--bg-card);
+            vertical-align: middle;
         }
 
         .data-table tbody tr {
@@ -372,6 +429,13 @@
             border-bottom: none;
         }
 
+        /* Inputs dentro da tabela - Mobile */
+        .data-table input {
+            padding: 10px;
+            font-size: 14px;
+            min-height: 40px;
+        }
+
         /* Badges e Status */
         .badge {
             display: inline-flex;
@@ -382,6 +446,7 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
 
         .badge-success {
@@ -399,16 +464,22 @@
             color: var(--primary-light);
         }
 
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
         /* Estatísticas e Cards de Valor */
         .stats-card {
             background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
             border-radius: var(--radius-lg);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--border-medium);
+            text-align: center;
         }
 
         .stats-value {
-            font-size: 32px;
+            font-size: clamp(24px, 6vw, 32px);
             font-weight: 700;
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 100%);
             -webkit-background-clip: text;
@@ -416,44 +487,25 @@
             color: transparent;
             line-height: 1;
             margin: 12px 0;
+            word-break: break-word;
         }
 
         .stats-label {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
+            display: block;
         }
 
-        .stats-change {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 8px;
-            border-radius: var(--radius-full);
-            margin-top: 8px;
-        }
-
-        .positive {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--secondary);
-        }
-
-        .negative {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--danger);
-        }
-
-        /* Modal Moderno */
+        /* Modal Moderno - Responsivo */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
@@ -462,6 +514,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all var(--transition-normal);
+            padding: 20px;
         }
 
         .modal-overlay.active {
@@ -472,7 +525,7 @@
         .modal-container {
             background: var(--bg-card);
             border-radius: var(--radius-xl);
-            width: 90%;
+            width: 100%;
             max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
@@ -487,15 +540,19 @@
         }
 
         .modal-header {
-            padding: 24px 32px;
+            padding: 20px;
             border-bottom: 1px solid var(--border-medium);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg-card);
+            z-index: 10;
         }
 
         .modal-title {
-            font-size: 24px;
+            font-size: clamp(18px, 4vw, 24px);
             font-weight: 600;
             color: var(--text-primary);
         }
@@ -504,24 +561,137 @@
             background: none;
             border: none;
             color: var(--text-secondary);
-            font-size: 24px;
+            font-size: 28px;
             cursor: pointer;
             transition: color var(--transition-fast);
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: var(--radius-full);
+            flex-shrink: 0;
         }
 
-        .modal-close:hover {
-            color: var(--text-primary);
+        .modal-close:active {
             background: rgba(255, 255, 255, 0.05);
         }
 
         .modal-body {
-            padding: 32px;
+            padding: 20px;
+        }
+
+        /* Filtro por Período */
+        .period-filter {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .period-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .period-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .period-result {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Lista de Colaboradores com Ações */
+        .colaborador-item {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            border: 1px solid transparent;
+            transition: all var(--transition-fast);
+        }
+
+        @media (min-width: 640px) {
+            .colaborador-item {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .colaborador-item:hover {
+            border-color: var(--primary);
+        }
+
+        .colaborador-info {
+            flex: 1;
+        }
+
+        .colaborador-nome {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .colaborador-details {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
+        }
+
+        .colaborador-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Lista de Cargos */
+        .cargo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            margin-bottom: 8px;
+            border: 1px solid transparent;
+            transition: all var(--transition-fast);
+        }
+
+        .cargo-item:hover {
+            border-color: var(--primary);
+        }
+
+        /* Menu Mobile */
+        .mobile-menu {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-menu::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-menu-btn {
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         /* Scrollbar Personalizada */
@@ -549,38 +719,64 @@
             display: flex;
         }
 
+        .flex-col {
+            flex-direction: column;
+        }
+
         .flex-between {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        @media (min-width: 768px) {
+            .flex-between {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
         }
 
         .flex-center {
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
+        .gap-2 { gap: 8px; }
         .gap-4 { gap: 16px; }
         .gap-6 { gap: 24px; }
         .gap-8 { gap: 32px; }
 
+        .mb-2 { margin-bottom: 8px; }
         .mb-4 { margin-bottom: 16px; }
         .mb-6 { margin-bottom: 24px; }
         .mb-8 { margin-bottom: 32px; }
 
+        .mt-2 { margin-top: 8px; }
         .mt-4 { margin-top: 16px; }
         .mt-6 { margin-top: 24px; }
         .mt-8 { margin-top: 32px; }
 
+        .p-2 { padding: 8px; }
         .p-4 { padding: 16px; }
         .p-6 { padding: 24px; }
 
         .text-center { text-align: center; }
         .text-right { text-align: right; }
+        .text-left { text-align: left; }
 
         .w-full { width: 100%; }
         .w-auto { width: auto; }
+
+        .hidden { display: none; }
+        .block { display: block; }
+
+        @media (min-width: 768px) {
+            .hidden-md { display: none; }
+            .block-md { display: block; }
+        }
 
         /* Animações */
         @keyframes fadeIn {
@@ -599,48 +795,6 @@
 
         .animate-slideIn {
             animation: slideIn var(--transition-normal) ease-out;
-        }
-
-        /* Responsividade */
-        @media (max-width: 768px) {
-            body {
-                padding: 12px;
-            }
-            
-            .app-header {
-                padding: 24px;
-            }
-            
-            .app-title {
-                font-size: 24px;
-            }
-            
-            .card {
-                padding: 20px;
-            }
-            
-            .btn {
-                padding: 12px 20px;
-            }
-        }
-
-        /* Status Indicators */
-        .status-indicator {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-
-        .status-active {
-            background: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-        }
-
-        .status-inactive {
-            background: var(--danger);
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
         }
 
         /* Loading States */
@@ -669,96 +823,177 @@
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
+
+        /* Avisos e Alertas */
+        .alert {
+            padding: 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--secondary);
+        }
+
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+        }
+
+        /* Ícones ajustados para mobile */
+        .icon-lg {
+            font-size: 24px;
+        }
+
+        .icon-md {
+            font-size: 20px;
+        }
+
+        .icon-sm {
+            font-size: 16px;
+        }
+
+        /* Ajustes específicos para telas muito pequenas */
+        @media (max-width: 360px) {
+            html {
+                font-size: 14px;
+            }
+            
+            .btn {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+            
+            .card {
+                padding: 16px;
+            }
+            
+            .stats-value {
+                font-size: 20px;
+            }
+        }
+
+        /* Ajuste para orientação paisagem em mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .modal-container {
+                max-height: 80vh;
+            }
+            
+            .app-header {
+                padding: 16px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="app-container">
+        <!-- Menu Mobile -->
+        <div class="mobile-menu hidden-md">
+            <button class="btn btn-sm btn-outline mobile-menu-btn" onclick="scrollToSection('gestao')">
+                <i class="fas fa-users"></i> Colaboradores
+            </button>
+            <button class="btn btn-sm btn-outline mobile-menu-btn" onclick="scrollToSection('servicos')">
+                <i class="fas fa-tasks"></i> Serviços
+            </button>
+            <button class="btn btn-sm btn-outline mobile-menu-btn" onclick="scrollToSection('filtros')">
+                <i class="fas fa-filter"></i> Filtros
+            </button>
+            <button class="btn btn-sm btn-outline mobile-menu-btn" onclick="scrollToSection('relatorios')">
+                <i class="fas fa-chart-bar"></i> Relatórios
+            </button>
+        </div>
+
         <!-- Header -->
         <header class="app-header animate-fadeIn">
             <div class="header-content">
                 <h1 class="app-title">
-                    <i class="fas fa-chart-line"></i> MentorComm Pro
+                    <i class="fas fa-chart-line"></i> 
+                    <span>MentorComm Pro</span>
                 </h1>
                 <p class="app-subtitle">Sistema Avançado de Gestão de Comissões • Taxa: 8%</p>
                 
-                <div class="flex-between mt-8">
+                <div class="flex-between mt-6">
                     <div class="stats-card">
                         <span class="stats-label">Comissão Total</span>
                         <div class="stats-value" id="total-comissao">R$ 0,00</div>
-                        <span class="stats-change positive">
-                            <i class="fas fa-arrow-up"></i> Atualizado em tempo real
-                        </span>
                     </div>
                     
-                    <div class="flex-center gap-4">
-                        <button class="btn btn-outline" onclick="abrirModalCargos()">
-                            <i class="fas fa-user-tag"></i> Gerenciar Cargos
+                    <div class="flex-center gap-2 mt-4 md:mt-0">
+                        <button class="btn btn-sm btn-outline" onclick="abrirModalCargos()">
+                            <i class="fas fa-user-tag"></i>
+                            <span class="hidden md:inline">Cargos</span>
                         </button>
-                        <button class="btn btn-outline" onclick="abrirModalHistorico()">
-                            <i class="fas fa-history"></i> Histórico
+                        <button class="btn btn-sm btn-outline" onclick="abrirModalHistorico()">
+                            <i class="fas fa-history"></i>
+                            <span class="hidden md:inline">Histórico</span>
+                        </button>
+                        <button class="btn btn-sm btn-outline" onclick="abrirModalGerenciarColaboradores()">
+                            <i class="fas fa-users-cog"></i>
+                            <span class="hidden md:inline">Gerenciar</span>
                         </button>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- Grid Principal -->
-        <div class="grid-2">
-            <!-- Gestão de Colaboradores -->
-            <div class="card animate-slideIn">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <i class="fas fa-users"></i> Gestão de Colaboradores
-                    </h2>
-                    <span class="badge badge-primary" id="total-colabs">0 ativos</span>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Adicionar Novo Colaborador</label>
-                    <div class="grid-2 gap-4 mb-4">
-                        <input type="text" id="novo-nome" class="form-input" placeholder="Nome completo">
-                        <input type="date" id="data-adicao" class="form-input">
-                    </div>
-                    <div class="flex-between">
-                        <select id="novo-cargo" class="form-select w-auto">
-                            <option value="">Selecione um cargo</option>
-                        </select>
-                        <button class="btn btn-primary" onclick="adicionarNovoColaborador()">
-                            <i class="fas fa-plus"></i> Adicionar
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="form-group mt-8">
-                    <label class="form-label">Colaborador Ativo</label>
-                    <select id="colaborador-selector" class="form-select" onchange="selecionarColaborador(this.value)">
-                        <option value="">Selecione um colaborador</option>
-                    </select>
-                </div>
-                
-                <div id="adicionar-msg" class="mt-4 text-center"></div>
+        <!-- Seção: Gestão de Colaboradores -->
+        <div class="card animate-slideIn" id="gestao">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <i class="fas fa-users"></i> Gestão de Colaboradores
+                </h2>
+                <span class="badge badge-primary" id="total-colabs">0 ativos</span>
             </div>
+            
+            <div class="form-group">
+                <label class="form-label">Adicionar Novo Colaborador</label>
+                <div class="grid-2 gap-4 mb-4">
+                    <input type="text" id="novo-nome" class="form-input" placeholder="Nome completo" 
+                           autocomplete="off" autocapitalize="words">
+                    <input type="date" id="data-adicao" class="form-input">
+                </div>
+                <div class="flex-between gap-4 mb-4">
+                    <select id="novo-cargo" class="form-select w-full md:w-auto">
+                        <option value="">Selecione um cargo</option>
+                    </select>
+                    <button class="btn btn-primary w-full md:w-auto" onclick="adicionarNovoColaborador()">
+                        <i class="fas fa-plus"></i> Adicionar
+                    </button>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Colaborador Ativo</label>
+                <select id="colaborador-selector" class="form-select" onchange="selecionarColaborador(this.value)">
+                    <option value="">Selecione um colaborador</option>
+                </select>
+            </div>
+            
+            <div id="adicionar-msg" class="mt-4"></div>
+        </div>
 
-            <!-- Detalhes do Colaborador -->
+        <!-- Seção: Detalhes do Colaborador -->
+        <div class="grid-2 gap-4">
             <div class="card animate-slideIn">
                 <div class="card-header">
                     <h2 class="card-title">
-                        <i class="fas fa-user-circle"></i> Detalhes
+                        <i class="fas fa-user-circle"></i> Detalhes do Colaborador
                     </h2>
-                    <div class="flex-center">
-                        <span class="status-indicator status-active"></span>
-                        <span id="colaborador-status">Ativo</span>
-                    </div>
                 </div>
                 
-                <div class="mb-8">
-                    <h3 id="colaborador-nome-display" class="text-center mb-2" style="font-size: 24px; font-weight: 600;">-</h3>
-                    <p id="colaborador-cargo-display" class="text-center text-muted">-</p>
-                    <p id="data-adicao-display" class="text-center text-muted mt-2">-</p>
+                <div class="text-center p-6">
+                    <h3 id="colaborador-nome-display" class="mb-2" style="font-size: 22px; font-weight: 600;">-</h3>
+                    <p id="colaborador-cargo-display" class="text-muted mb-4">-</p>
+                    <p id="data-adicao-display" class="text-sm text-muted">-</p>
                 </div>
                 
-                <!-- Estatísticas Históricas -->
-                <div class="grid-2 gap-4 mb-8">
+                <div class="grid-2 gap-4">
                     <div class="stats-card">
                         <span class="stats-label">Total Histórico</span>
                         <div class="stats-value" id="ganho-total-historico">R$ 0,00</div>
@@ -769,41 +1004,90 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Seção: Serviços -->
+            <div class="card animate-slideIn" id="servicos">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-tasks"></i> Serviços Prestados
+                    </h2>
+                    <button class="btn btn-sm btn-primary" onclick="adicionarServico()">
+                        <i class="fas fa-plus"></i> Novo
+                    </button>
+                </div>
+                
+                <div id="servicos-container" class="mb-6">
+                    <p class="text-center text-muted p-6">Selecione um colaborador para gerenciar serviços</p>
+                </div>
+                
+                <div class="grid-2 gap-4">
+                    <div class="text-center">
+                        <span class="stats-label">Faturamento</span>
+                        <div class="stats-value" id="faturamento-individual">R$ 0,00</div>
+                    </div>
+                    <div class="text-center">
+                        <span class="stats-label">Comissão (8%)</span>
+                        <div class="stats-value text-success" id="comissao-individual">R$ 0,00</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Serviços e Faturamento -->
-        <div class="card animate-fadeIn">
+        <!-- Seção: Filtros por Período -->
+        <div class="card animate-fadeIn" id="filtros">
             <div class="card-header">
                 <h2 class="card-title">
-                    <i class="fas fa-tasks"></i> Serviços Prestados
+                    <i class="fas fa-calendar-alt"></i> Filtro por Período
                 </h2>
-                <button class="btn btn-sm btn-primary" onclick="adicionarServico()">
-                    <i class="fas fa-plus"></i> Novo Serviço
-                </button>
             </div>
             
-            <div id="servicos-container" class="mb-6">
-                <p class="text-center text-muted">Selecione um colaborador para gerenciar serviços</p>
-            </div>
-            
-            <div class="flex-between">
-                <div>
-                    <span class="stats-label">Faturamento do Período</span>
-                    <div class="stats-value" id="faturamento-individual">R$ 0,00</div>
+            <div class="period-filter">
+                <div class="period-grid">
+                    <div class="form-group">
+                        <label class="form-label">Data Inicial</label>
+                        <input type="date" id="data-inicial" class="form-input" 
+                               onchange="calcularGanhosPeriodo()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Data Final</label>
+                        <input type="date" id="data-final" class="form-input" 
+                               onchange="calcularGanhosPeriodo()">
+                    </div>
                 </div>
-                <div class="text-right">
-                    <span class="stats-label">Comissão (8%)</span>
-                    <div class="stats-value text-success" id="comissao-individual">R$ 0,00</div>
+                
+                <div class="form-group">
+                    <label class="form-label">Filtrar por Colaborador</label>
+                    <select id="filtro-periodo-colaborador" class="form-select" onchange="calcularGanhosPeriodo()">
+                        <option value="TODOS">Todos os Colaboradores</option>
+                    </select>
+                </div>
+                
+                <div class="period-result" id="periodo-resultado" style="display: none;">
+                    <h4 class="mb-2">Resultado do Período</h4>
+                    <div class="grid-3 gap-4 mt-4">
+                        <div>
+                            <span class="stats-label" style="color: rgba(255,255,255,0.8);">Total Faturado</span>
+                            <div class="stats-value" id="periodo-total" style="color: white;">R$ 0,00</div>
+                        </div>
+                        <div>
+                            <span class="stats-label" style="color: rgba(255,255,255,0.8);">Comissão (8%)</span>
+                            <div class="stats-value" id="periodo-comissao" style="color: white;">R$ 0,00</div>
+                        </div>
+                        <div>
+                            <span class="stats-label" style="color: rgba(255,255,255,0.8);">Colaboradores</span>
+                            <div class="stats-value" id="periodo-colaboradores" style="color: white;">0</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Geração de Relatórios -->
-        <div class="grid-3 animate-fadeIn">
+        <!-- Seção: Geração de Relatórios -->
+        <div class="grid-3 animate-fadeIn" id="relatorios">
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">
-                        <i class="fas fa-filter"></i> Filtros
+                        <i class="fas fa-filter"></i> Filtros do Relatório
                     </h2>
                 </div>
                 <div class="form-group">
@@ -823,7 +1107,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">
-                        <i class="fas fa-calendar-alt"></i> Período
+                        <i class="fas fa-cog"></i> Configurações
                     </h2>
                 </div>
                 <div class="form-group">
@@ -833,7 +1117,7 @@
                 <div class="form-group">
                     <label class="form-label">Observações</label>
                     <textarea id="observacoes-relatorio" class="form-textarea" rows="3" 
-                              placeholder="Observações importantes sobre o período..." 
+                              placeholder="Observações importantes..." 
                               oninput="salvarContextoRelatorio()"></textarea>
                 </div>
             </div>
@@ -841,14 +1125,14 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">
-                        <i class="fas fa-file-pdf"></i> Relatório
+                        <i class="fas fa-file-pdf"></i> Gerar Relatório
                     </h2>
                 </div>
                 <div class="flex flex-col gap-4 h-full justify-center">
                     <button class="btn btn-success w-full" onclick="gerarEArquivarRelatorio()">
                         <i class="fas fa-file-export"></i> Gerar Relatório
                     </button>
-                    <p class="text-center text-muted text-sm" id="pdf-message">
+                    <p class="text-center text-sm text-muted" id="pdf-message">
                         Clique para gerar relatório completo
                     </p>
                 </div>
@@ -856,9 +1140,7 @@
         </div>
 
         <!-- Relatório Completo -->
-        <div id="relatorio-completo-output" class="card" style="display: none;">
-            <!-- Gerado dinamicamente -->
-        </div>
+        <div id="relatorio-completo-output" class="card" style="display: none;"></div>
     </div>
 
     <!-- Modal de Cargos -->
@@ -873,16 +1155,22 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label class="form-label">Adicionar Novo Cargo</label>
-                    <div class="flex gap-4">
+                    <div class="flex gap-2">
                         <input type="text" id="novo-cargo-modal-input" class="form-input" 
                                placeholder="Ex: Eletricista Sênior">
                         <button class="btn btn-primary" onclick="adicionarNovoCargo()">
-                            <i class="fas fa-plus"></i> Adicionar
+                            <i class="fas fa-plus"></i>
                         </button>
                     </div>
                 </div>
-                <div id="cargos-list-display" class="mt-6 p-4 bg-secondary rounded-lg">
-                    <!-- Lista de cargos será preenchida aqui -->
+                
+                <div class="mt-6">
+                    <h4 class="mb-4" style="color: var(--text-secondary); font-size: 16px;">
+                        <i class="fas fa-list"></i> Cargos Existentes
+                    </h4>
+                    <div id="cargos-lista">
+                        <!-- Lista de cargos será preenchida aqui -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -900,6 +1188,23 @@
             <div class="modal-body">
                 <div id="historico-lista">
                     <p class="text-center text-muted">Carregando histórico...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Gerenciar Colaboradores -->
+    <div id="gerenciarColaboradoresModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-users-cog"></i> Gerenciar Colaboradores
+                </h3>
+                <button class="modal-close" onclick="fecharModalGerenciarColaboradores()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="lista-colaboradores-gerenciar">
+                    <p class="text-center text-muted">Carregando colaboradores...</p>
                 </div>
             </div>
         </div>
@@ -955,13 +1260,11 @@
         const adicionarMsgEl = document.getElementById('adicionar-msg');
         const servicosContainerEl = document.getElementById('servicos-container');
         const novoCargoSelectEl = document.getElementById('novo-cargo');
-        const cargosListDisplayEl = document.getElementById('cargos-list-display');
-        const pdfBtnEl = document.querySelector('.btn-success');
+        const cargosListDisplayEl = document.getElementById('cargos-lista');
         const relatorioOutputEl = document.getElementById('relatorio-completo-output');
         const cargoModalEl = document.getElementById('cargoModal');
-        const novoCargoModalInputEl = document.getElementById('novo-cargo-modal-input');
         const historicoModalEl = document.getElementById('historicoModal');
-        const historicoListaEl = document.getElementById('historico-lista');
+        const gerenciarColabModalEl = document.getElementById('gerenciarColaboradoresModal');
         const filtroCargoEl = document.getElementById('filtro-cargo');
         const filtroColaboradorEl = document.getElementById('filtro-colaborador');
         const dataRelatorioEl = document.getElementById('data-relatorio');
@@ -970,7 +1273,15 @@
         const ganhoTotalHistoricoEl = document.getElementById('ganho-total-historico');
         const mediaMensalHistoricoEl = document.getElementById('media-mensal-historico');
         const dataAdicaoDisplayEl = document.getElementById('data-adicao-display');
-        const mesesDesdeAdicaoEl = document.getElementById('meses-desde-adicao');
+
+        // Elementos do filtro por período
+        const dataInicialEl = document.getElementById('data-inicial');
+        const dataFinalEl = document.getElementById('data-final');
+        const filtroPeriodoColabEl = document.getElementById('filtro-periodo-colaborador');
+        const periodoResultadoEl = document.getElementById('periodo-resultado');
+        const periodoTotalEl = document.getElementById('periodo-total');
+        const periodoComissaoEl = document.getElementById('periodo-comissao');
+        const periodoColaboradoresEl = document.getElementById('periodo-colaboradores');
 
         // --- Firebase Imports ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -1030,6 +1341,7 @@
                     // Interface inicial
                     popularCargosSelector();
                     popularFiltroCargo();
+                    popularFiltroPeriodoColaborador();
                     popularSelector();
                     popularFiltroColaborador();
                     calcularRelatorioTotal();
@@ -1044,33 +1356,40 @@
                     // Atualiza interface
                     popularCargosSelector();
                     popularFiltroCargo();
+                    popularFiltroPeriodoColaborador();
                     popularSelector();
                     popularFiltroColaborador();
                     calcularRelatorioTotal();
                 }
 
-                // Monitora alterações em tempo real
-                iniciarMonitoramentoFirestore();
-
-                // Atualiza data do relatório se vazia
+                // Configura datas padrão para o filtro por período
+                const hoje = new Date();
+                const primeiroDiaMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+                const ultimoDiaMes = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
+                
+                dataInicialEl.value = primeiroDiaMes.toISOString().split('T')[0];
+                dataFinalEl.value = ultimoDiaMes.toISOString().split('T')[0];
+                
                 if (!dataRelatorioEl.value) {
-                    dataRelatorioEl.value = new Date().toISOString().split('T')[0];
+                    dataRelatorioEl.value = hoje.toISOString().split('T')[0];
                     salvarContextoRelatorio();
                 }
+
+                // Monitora alterações em tempo real
+                iniciarMonitoramentoFirestore();
 
             } catch (error) {
                 console.error("❌ Erro no Firebase:", error);
                 
                 // Fallback para dados locais
                 const errorBox = document.createElement('div');
-                errorBox.className = 'card';
-                errorBox.style.background = 'linear-gradient(135deg, #3c1a1a 0%, #5c2b2b 100%)';
-                errorBox.style.borderColor = 'var(--danger)';
+                errorBox.className = 'alert alert-danger';
                 errorBox.innerHTML = `
-                    <h3 class="card-title" style="color: var(--danger);">
-                        <i class="fas fa-exclamation-triangle"></i> Modo Offline
-                    </h3>
-                    <p>Usando dados locais. Erro: ${error.message}</p>
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <strong>Modo Offline</strong>
+                        <p>Usando dados locais. Erro: ${error.message}</p>
+                    </div>
                 `;
                 document.querySelector('.app-container').prepend(errorBox);
                 
@@ -1083,6 +1402,7 @@
             CARGOS = ['Borracheiro', 'Alinhador', 'Mecânico', 'Outro'];
             popularCargosSelector();
             popularFiltroCargo();
+            popularFiltroPeriodoColaborador();
             popularSelector();
             popularFiltroColaborador();
             calcularRelatorioTotal();
@@ -1127,6 +1447,7 @@
                         colaboradores = data.colaboradores;
                         popularSelector();
                         popularFiltroColaborador();
+                        popularFiltroPeriodoColaborador();
                         calcularRelatorioTotal();
 
                         if (colaboradorAtivoId) {
@@ -1160,13 +1481,29 @@
         };
 
         // --- Funções de Interface ---
+        window.scrollToSection = (sectionId) => {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        };
+
         window.abrirModalCargos = () => {
             cargoModalEl.classList.add('active');
-            popularCargosSelector();
+            atualizarListaCargos();
         };
 
         window.fecharModalCargos = () => {
             cargoModalEl.classList.remove('active');
+        };
+
+        window.abrirModalGerenciarColaboradores = () => {
+            gerenciarColabModalEl.classList.add('active');
+            atualizarListaColaboradoresGerenciar();
+        };
+
+        window.fecharModalGerenciarColaboradores = () => {
+            gerenciarColabModalEl.classList.remove('active');
         };
 
         window.abrirModalHistorico = async () => {
@@ -1193,7 +1530,7 @@
 
                 relatorios.sort((a, b) => new Date(b.dataGeracaoISO) - new Date(a.dataGeracaoISO));
 
-                let html = '<div class="grid-2 gap-4">';
+                let html = '<div class="grid-1 gap-4">';
                 relatorios.forEach(relatorio => {
                     const dataGeracao = relatorio.dataRelatorio || relatorio.dataGeracao || 'N/D';
                     const filtro = relatorio.filtroAplicado || 'Geral';
@@ -1201,19 +1538,17 @@
                     const colaboradoresCount = relatorio.colaboradoresDetalhes?.length || 0;
 
                     html += `
-                        <div class="card" onclick="visualizarRelatorioHistorico('${relatorio.id}')" 
-                             style="cursor: pointer; padding: 20px;">
-                            <div class="flex-between mb-3">
-                                <span class="badge badge-success">${dataGeracao}</span>
-                                <span class="text-sm text-muted">${colaboradoresCount} colabs</span>
+                        <div class="colaborador-item" onclick="visualizarRelatorioHistorico('${relatorio.id}')" 
+                             style="cursor: pointer;">
+                            <div class="colaborador-info">
+                                <div class="colaborador-nome">${dataGeracao}</div>
+                                <div class="colaborador-details">
+                                    <span>${filtro}</span>
+                                    <span>• ${colaboradoresCount} colabs</span>
+                                </div>
                             </div>
-                            <div class="stats-value" style="font-size: 24px;">${totalComissao}</div>
-                            <p class="text-sm text-muted mt-2">${filtro}</p>
-                            <div class="flex-between mt-4">
-                                <button class="btn btn-sm btn-outline" 
-                                        onclick="event.stopPropagation(); visualizarRelatorioHistorico('${relatorio.id}')">
-                                    <i class="fas fa-eye"></i>
-                                </button>
+                            <div class="colaborador-actions">
+                                <span class="badge badge-success">${totalComissao}</span>
                                 <button class="btn btn-sm btn-danger" 
                                         onclick="event.stopPropagation(); excluirRelatorioHistorico('${relatorio.id}')">
                                     <i class="fas fa-trash"></i>
@@ -1227,7 +1562,7 @@
 
             } catch (error) {
                 console.error("Erro ao carregar histórico:", error);
-                historicoListaEl.innerHTML = '<p class="text-center text-danger">Erro ao carregar o histórico.</p>';
+                historicoListaEl.innerHTML = '<div class="alert alert-danger">Erro ao carregar o histórico.</div>';
             }
         };
 
@@ -1244,17 +1579,22 @@
             if (e.target === historicoModalEl) fecharModalHistorico();
         });
 
+        gerenciarColabModalEl.addEventListener('click', (e) => {
+            if (e.target === gerenciarColabModalEl) fecharModalGerenciarColaboradores();
+        });
+
         // --- Gestão de Cargos ---
         window.adicionarNovoCargo = () => {
-            const novoCargo = novoCargoModalInputEl.value.trim();
+            const novoCargoInput = document.getElementById('novo-cargo-modal-input');
+            const novoCargo = novoCargoInput.value.trim();
 
             if (novoCargo.length < 3) {
-                alert("❌ Nome do cargo deve ter pelo menos 3 caracteres.");
+                showAlert("❌ Nome do cargo deve ter pelo menos 3 caracteres.", "danger");
                 return;
             }
             
             if (CARGOS.map(c => c.toLowerCase()).includes(novoCargo.toLowerCase())) {
-                alert("⚠️ Este cargo já existe.");
+                showAlert("⚠️ Este cargo já existe.", "warning");
                 return;
             }
 
@@ -1262,45 +1602,87 @@
             salvarDados();
             popularCargosSelector();
             popularFiltroCargo();
-            novoCargoModalInputEl.value = "";
+            novoCargoInput.value = "";
             
-            // Feedback visual
-            const feedback = document.createElement('div');
-            feedback.className = 'badge badge-success';
-            feedback.textContent = `✓ Cargo "${novoCargo}" adicionado`;
-            feedback.style.marginTop = '10px';
-            feedback.style.opacity = '1';
+            showAlert(`✅ Cargo "${novoCargo}" adicionado com sucesso!`, "success");
+            atualizarListaCargos();
+        };
+
+        window.excluirCargo = (cargoNome) => {
+            if (!confirm(`⚠️ Tem certeza que deseja excluir o cargo "${cargoNome}"?\n\nColaboradores com este cargo serão mantidos, mas o cargo não estará mais disponível para novos cadastros.`)) {
+                return;
+            }
+
+            // Verifica se há colaboradores com este cargo
+            const colaboradoresComCargo = colaboradores.filter(c => c.cargo === cargoNome);
             
-            setTimeout(() => {
-                feedback.style.transition = 'opacity 0.5s';
-                feedback.style.opacity = '0';
-                setTimeout(() => feedback.remove(), 500);
-            }, 2000);
+            if (colaboradoresComCargo.length > 0) {
+                if (!confirm(`⚠️ Existem ${colaboradoresComCargo.length} colaborador(es) com este cargo.\nEles manterão o cargo atual, mas você não poderá mais atribuir este cargo a novos colaboradores.\n\nDeseja continuar?`)) {
+                    return;
+                }
+            }
+
+            CARGOS = CARGOS.filter(c => c !== cargoNome);
+            salvarDados();
+            popularCargosSelector();
+            popularFiltroCargo();
             
-            cargosListDisplayEl.appendChild(feedback);
+            showAlert(`✅ Cargo "${cargoNome}" excluído com sucesso!`, "success");
+            atualizarListaCargos();
+        };
+
+        const atualizarListaCargos = () => {
+            if (cargosListDisplayEl) {
+                let html = '';
+                
+                if (CARGOS.length === 0) {
+                    html = '<p class="text-center text-muted">Nenhum cargo cadastrado</p>';
+                } else {
+                    CARGOS.forEach(cargo => {
+                        const colaboradoresComCargo = colaboradores.filter(c => c.cargo === cargo).length;
+                        
+                        html += `
+                            <div class="cargo-item">
+                                <div>
+                                    <strong>${cargo}</strong>
+                                    <div class="text-sm text-muted mt-1">
+                                        ${colaboradoresComCargo} colaborador(es)
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-danger" onclick="excluirCargo('${cargo}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                    });
+                }
+                
+                cargosListDisplayEl.innerHTML = html;
+            }
         };
 
         const popularCargosSelector = () => {
             // Limpa e popula o select principal
-            novoCargoSelectEl.innerHTML = '<option value="">Selecione um cargo</option>';
-            CARGOS.forEach(cargo => {
-                const option = document.createElement('option');
-                option.value = cargo;
-                option.textContent = cargo;
-                novoCargoSelectEl.appendChild(option);
-            });
+            if (novoCargoSelectEl) {
+                novoCargoSelectEl.innerHTML = '<option value="">Selecione um cargo</option>';
+                CARGOS.forEach(cargo => {
+                    const option = document.createElement('option');
+                    option.value = cargo;
+                    option.textContent = cargo;
+                    novoCargoSelectEl.appendChild(option);
+                });
+            }
 
-            // Atualiza a lista no modal
-            cargosListDisplayEl.innerHTML = `
-                <h4 class="mb-4" style="color: var(--text-secondary); font-size: 14px;">
-                    <i class="fas fa-list"></i> CARGOS DISPONÍVEIS (${CARGOS.length})
-                </h4>
-                <div class="grid-3" style="gap: 8px;">
-                    ${CARGOS.map(cargo => `
-                        <span class="badge badge-primary">${cargo}</span>
-                    `).join('')}
-                </div>
-            `;
+            // Atualiza filtro de cargos
+            if (filtroCargoEl) {
+                filtroCargoEl.innerHTML = '<option value="TODOS">Todos os Cargos</option>';
+                CARGOS.forEach(cargo => {
+                    const option = document.createElement('option');
+                    option.value = cargo;
+                    option.textContent = cargo;
+                    filtroCargoEl.appendChild(option);
+                });
+            }
         };
 
         // --- Gestão de Colaboradores ---
@@ -1314,19 +1696,19 @@
             const dataAdicao = dataAdicaoInput.value;
 
             if (nome.length < 3) {
-                alert("❌ O nome deve ter pelo menos 3 caracteres!");
+                showAlert("❌ O nome deve ter pelo menos 3 caracteres!", "danger");
                 nomeInput.focus();
                 return;
             }
 
             if (!dataAdicao) {
-                alert("❌ A data de adição é obrigatória!");
+                showAlert("❌ A data de adição é obrigatória!", "danger");
                 dataAdicaoInput.focus();
                 return;
             }
 
             if (!cargo) {
-                alert("❌ Selecione um cargo!");
+                showAlert("❌ Selecione um cargo!", "danger");
                 cargoInput.focus();
                 return;
             }
@@ -1339,51 +1721,161 @@
                 cargo: cargo,
                 servicos: [],
                 dataAdicao: dataAdicao,
-                criadoEm: new Date().toISOString()
+                criadoEm: new Date().toISOString(),
+                ativo: true
             };
 
             colaboradores.push(novoColaborador);
             salvarDados();
 
             // Feedback visual
-            adicionarMsgEl.innerHTML = `
-                <div class="badge badge-success animate-fadeIn">
-                    <i class="fas fa-check"></i> ${nome} adicionado com sucesso!
-                </div>
-            `;
+            showAlert(`✅ ${nome} adicionado com sucesso!`, "success");
 
             // Limpa os campos
             nomeInput.value = "";
             dataAdicaoInput.value = "";
             cargoInput.value = "";
 
-            // Seleciona automaticamente o novo colaborador
-            setTimeout(() => {
-                colaboradorAtivoId = novoId;
+            // Foca no próximo campo
+            nomeInput.focus();
+
+            // Atualiza lista de colaboradores
+            popularFiltroPeriodoColaborador();
+        };
+
+        window.excluirColaborador = (colabId) => {
+            const colaborador = colaboradores.find(c => c.id === colabId);
+            if (!colaborador) return;
+
+            if (!confirm(`⚠️ Tem certeza que deseja excluir permanentemente o colaborador "${colaborador.nome}"?\n\nEsta ação não pode ser desfeita e todos os dados serão perdidos.`)) {
+                return;
+            }
+
+            colaboradores = colaboradores.filter(c => c.id !== colabId);
+            
+            // Se o colaborador excluído era o ativo, seleciona outro
+            if (colaboradorAtivoId === colabId) {
+                colaboradorAtivoId = colaboradores.length > 0 ? colaboradores[0].id : null;
+            }
+            
+            salvarDados();
+            
+            showAlert(`✅ ${colaborador.nome} excluído com sucesso!`, "success");
+            
+            // Atualiza a interface
+            popularSelector();
+            popularFiltroColaborador();
+            popularFiltroPeriodoColaborador();
+            calcularRelatorioTotal();
+            atualizarListaColaboradoresGerenciar();
+        };
+
+        const atualizarListaColaboradoresGerenciar = () => {
+            const listaContainer = document.getElementById('lista-colaboradores-gerenciar');
+            if (!listaContainer) return;
+
+            if (colaboradores.length === 0) {
+                listaContainer.innerHTML = '<p class="text-center text-muted">Nenhum colaborador cadastrado</p>';
+                return;
+            }
+
+            let html = '<div class="grid-1 gap-3">';
+            
+            colaboradores.sort((a, b) => a.nome.localeCompare(b.nome)).forEach(colab => {
+                const totalGanho = calcularTotalFaturadoColaborador(colab);
+                const comissao = totalGanho * TAXA_COMISSAO;
+                const totalServicos = colab.servicos.length;
+
+                html += `
+                    <div class="colaborador-item">
+                        <div class="colaborador-info">
+                            <div class="colaborador-nome">${colab.nome}</div>
+                            <div class="colaborador-details">
+                                <span>${colab.cargo}</span>
+                                <span>• ${totalServicos} serviços</span>
+                                <span>• ${formatarMoeda(totalGanho)}</span>
+                            </div>
+                        </div>
+                        <div class="colaborador-actions">
+                            <button class="btn btn-sm btn-outline" onclick="event.stopPropagation(); editarColaborador('${colab.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="event.stopPropagation(); excluirColaborador('${colab.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            listaContainer.innerHTML = html;
+        };
+
+        window.editarColaborador = (colabId) => {
+            const colaborador = colaboradores.find(c => c.id === colabId);
+            if (!colaborador) return;
+
+            const novoNome = prompt("Novo nome do colaborador:", colaborador.nome);
+            if (novoNome && novoNome.trim() && novoNome !== colaborador.nome) {
+                colaborador.nome = novoNome.trim();
+                salvarDados();
                 popularSelector();
-                adicionarMsgEl.innerHTML = '';
-            }, 2000);
+                popularFiltroColaborador();
+                popularFiltroPeriodoColaborador();
+                showAlert(`✅ Nome atualizado para "${novoNome}"`, "success");
+            }
+
+            const novoCargo = prompt("Novo cargo:", colaborador.cargo);
+            if (novoCargo && novoCargo !== colaborador.cargo) {
+                colaborador.cargo = novoCargo;
+                salvarDados();
+                popularSelector();
+                popularFiltroColaborador();
+                popularFiltroPeriodoColaborador();
+                showAlert(`✅ Cargo atualizado para "${novoCargo}"`, "success");
+            }
         };
 
         const popularSelector = () => {
+            if (!selectorEl) return;
+            
             selectorEl.innerHTML = '<option value="">Selecione um colaborador</option>';
             
-            colaboradores.sort((a, b) => a.nome.localeCompare(b.nome)).forEach(colab => {
-                const option = document.createElement('option');
-                option.value = colab.id;
-                option.textContent = `${colab.nome} • ${colab.cargo}`;
-                selectorEl.appendChild(option);
-            });
+            colaboradores
+                .filter(c => c.ativo !== false)
+                .sort((a, b) => a.nome.localeCompare(b.nome))
+                .forEach(colab => {
+                    const option = document.createElement('option');
+                    option.value = colab.id;
+                    option.textContent = `${colab.nome} • ${colab.cargo}`;
+                    selectorEl.appendChild(option);
+                });
 
             // Seleciona o ativo ou o primeiro disponível
             if (!colaboradorAtivoId && colaboradores.length > 0) {
                 colaboradorAtivoId = colaboradores[0].id;
-                selectorEl.value = colaboradorAtivoId;
+                if (selectorEl) selectorEl.value = colaboradorAtivoId;
                 selecionarColaborador(colaboradorAtivoId);
-            } else if (colaboradorAtivoId) {
+            } else if (colaboradorAtivoId && selectorEl) {
                 selectorEl.value = colaboradorAtivoId;
                 selecionarColaborador(colaboradorAtivoId);
             }
+        };
+
+        const popularFiltroPeriodoColaborador = () => {
+            if (!filtroPeriodoColabEl) return;
+            
+            filtroPeriodoColabEl.innerHTML = '<option value="TODOS">Todos os Colaboradores</option>';
+            colaboradores
+                .filter(c => c.ativo !== false)
+                .sort((a, b) => a.nome.localeCompare(b.nome))
+                .forEach(colab => {
+                    const option = document.createElement('option');
+                    option.value = colab.id;
+                    option.textContent = `${colab.nome} (${colab.cargo})`;
+                    filtroPeriodoColabEl.appendChild(option);
+                });
         };
 
         window.selecionarColaborador = (id) => {
@@ -1404,8 +1896,8 @@
                 cargoDisplayEl.textContent = "-";
                 dataAdicaoDisplayEl.textContent = "-";
                 servicosContainerEl.innerHTML = `
-                    <div class="text-center p-8">
-                        <i class="fas fa-user-slash" style="font-size: 48px; color: var(--text-muted); margin-bottom: 16px;"></i>
+                    <div class="text-center p-6">
+                        <i class="fas fa-user-slash icon-lg" style="color: var(--text-muted); margin-bottom: 16px;"></i>
                         <p class="text-muted">Nenhum colaborador selecionado</p>
                     </div>
                 `;
@@ -1414,14 +1906,63 @@
             calcularRelatorioTotal();
         };
 
+        // --- Filtro por Período ---
+        window.calcularGanhosPeriodo = () => {
+            const dataInicial = dataInicialEl.value;
+            const dataFinal = dataFinalEl.value;
+            const filtroColabId = filtroPeriodoColabEl.value;
+
+            if (!dataInicial || !dataFinal) {
+                periodoResultadoEl.style.display = 'none';
+                return;
+            }
+
+            let colaboradoresFiltrados = colaboradores;
+
+            // Aplica filtro por colaborador se especificado
+            if (filtroColabId !== 'TODOS') {
+                colaboradoresFiltrados = colaboradores.filter(c => c.id === filtroColabId);
+            }
+
+            // Aqui você implementaria a lógica para filtrar serviços por data
+            // Por enquanto, vamos calcular o total de todos os serviços
+            let totalFaturado = 0;
+            let totalComissao = 0;
+
+            colaboradoresFiltrados.forEach(colab => {
+                const ganho = calcularTotalFaturadoColaborador(colab);
+                totalFaturado += ganho;
+                totalComissao += ganho * TAXA_COMISSAO;
+            });
+
+            // Atualiza a interface
+            periodoTotalEl.textContent = formatarMoeda(totalFaturado);
+            periodoComissaoEl.textContent = formatarMoeda(totalComissao);
+            periodoColaboradoresEl.textContent = colaboradoresFiltrados.length;
+            periodoResultadoEl.style.display = 'block';
+
+            // Adiciona informações sobre o período
+            const periodoInfo = document.createElement('div');
+            periodoInfo.className = 'text-center text-sm mt-3';
+            periodoInfo.style.color = 'rgba(255,255,255,0.8)';
+            periodoInfo.textContent = `Período: ${formatarData(dataInicial)} até ${formatarData(dataFinal)}`;
+            
+            // Remove info anterior se existir
+            const infoAnterior = periodoResultadoEl.querySelector('.periodo-info');
+            if (infoAnterior) infoAnterior.remove();
+            
+            periodoInfo.classList.add('periodo-info');
+            periodoResultadoEl.appendChild(periodoInfo);
+        };
+
         // --- Gestão de Serviços ---
         const renderizarServicos = (colaborador) => {
             if (!colaborador.servicos || colaborador.servicos.length === 0) {
                 servicosContainerEl.innerHTML = `
-                    <div class="text-center p-8">
-                        <i class="fas fa-clipboard-list" style="font-size: 48px; color: var(--text-muted); margin-bottom: 16px;"></i>
-                        <p class="text-muted">Nenhum serviço registrado</p>
-                        <button class="btn btn-primary mt-4" onclick="adicionarServico()">
+                    <div class="text-center p-6">
+                        <i class="fas fa-clipboard-list icon-lg" style="color: var(--text-muted); margin-bottom: 16px;"></i>
+                        <p class="text-muted mb-4">Nenhum serviço registrado</p>
+                        <button class="btn btn-primary" onclick="adicionarServico()">
                             <i class="fas fa-plus"></i> Adicionar Primeiro Serviço
                         </button>
                     </div>
@@ -1430,49 +1971,47 @@
             }
 
             let html = `
-                <table class="data-table animate-fadeIn">
-                    <thead>
-                        <tr>
-                            <th>Serviço</th>
-                            <th>Quantidade</th>
-                            <th>Valor Unitário</th>
-                            <th>Total</th>
-                            <th style="width: 60px;"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Serviço</th>
+                                <th>Qtd</th>
+                                <th>Valor</th>
+                                <th style="width: 60px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
             `;
 
             colaborador.servicos.forEach(servico => {
                 const valorUnitario = (parseFloat(servico.valor) || 0) / (parseFloat(servico.qtd) || 1);
-                const total = parseFloat(servico.valor) || 0;
 
                 html += `
                     <tr data-service-id="${servico.id}">
                         <td>
                             <input type="text" value="${servico.servico}" 
                                    class="form-input" 
-                                   style="background: transparent; border: none; padding: 0;"
+                                   style="background: transparent; border: none; padding: 0; font-size: 14px;"
                                    oninput="atualizarServicoDetalhes('${servico.id}', 'servico', this.value)">
                         </td>
                         <td>
                             <input type="number" value="${servico.qtd}" min="0" step="1"
                                    class="form-input" 
-                                   style="width: 80px; text-align: center;"
+                                   style="width: 70px; text-align: center; padding: 8px;"
                                    oninput="atualizarServicoDetalhes('${servico.id}', 'qtd', this.value)">
                         </td>
-                        <td>${formatarMoeda(valorUnitario)}</td>
                         <td>
                             <div class="flex-center">
-                                <span style="color: var(--text-muted); margin-right: 4px;">R$</span>
-                                <input type="number" value="${total.toFixed(2)}" min="0" step="0.01"
+                                <span style="color: var(--text-muted); margin-right: 4px; font-size: 14px;">R$</span>
+                                <input type="number" value="${(parseFloat(servico.valor) || 0).toFixed(2)}" min="0" step="0.01"
                                        class="form-input" 
-                                       style="width: 120px;"
+                                       style="width: 100px; padding: 8px; font-size: 14px;"
                                        oninput="atualizarServicoDetalhes('${servico.id}', 'valor', this.value)">
                             </div>
                         </td>
                         <td>
-                            <button class="btn btn-icon btn-danger" onclick="removerServico('${servico.id}')">
+                            <button class="btn btn-icon btn-danger" onclick="removerServico('${servico.id}')" style="width: 40px; height: 40px;">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
@@ -1481,8 +2020,9 @@
             });
 
             html += `
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             `;
 
             servicosContainerEl.innerHTML = html;
@@ -1491,7 +2031,7 @@
         window.adicionarServico = () => {
             const colaborador = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
             if (!colaborador) {
-                alert("⚠️ Selecione um colaborador primeiro.");
+                showAlert("⚠️ Selecione um colaborador primeiro.", "warning");
                 return;
             }
 
@@ -1511,7 +2051,10 @@
                 if (newRow) {
                     newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     const input = newRow.querySelector('input[type="text"]');
-                    if (input) input.focus();
+                    if (input) {
+                        input.focus();
+                        input.select();
+                    }
                 }
             }, 100);
         };
@@ -1524,6 +2067,7 @@
 
             colaborador.servicos = colaborador.servicos.filter(s => String(s.id) !== String(serviceId));
             salvarDados();
+            showAlert("✅ Serviço removido com sucesso!", "success");
         };
 
         window.atualizarServicoDetalhes = (serviceId, campo, valor) => {
@@ -1577,20 +2121,23 @@
             let totalComissaoMentor = 0;
 
             colaboradores.forEach(colab => {
-                const ganho = calcularTotalFaturadoColaborador(colab);
-                totalGanhoBruto += ganho;
-                totalComissaoMentor += ganho * TAXA_COMISSAO;
+                if (colab.ativo !== false) {
+                    const ganho = calcularTotalFaturadoColaborador(colab);
+                    totalGanhoBruto += ganho;
+                    totalComissaoMentor += ganho * TAXA_COMISSAO;
+                }
             });
 
             // Atualiza o total geral
             totalComissaoEl.textContent = formatarMoeda(totalComissaoMentor);
             
             // Atualiza o contador de colaboradores
-            document.getElementById('total-colabs').textContent = `${colaboradores.length} ativos`;
+            const colabsAtivos = colaboradores.filter(c => c.ativo !== false).length;
+            document.getElementById('total-colabs').textContent = `${colabsAtivos} ativos`;
 
             // Atualiza dados do colaborador ativo
             const colab = colaboradores.find(c => String(c.id) === String(colaboradorAtivoId));
-            if (colab) {
+            if (colab && colab.ativo !== false) {
                 const ganho = calcularTotalFaturadoColaborador(colab);
                 faturamentoIndividualEl.textContent = formatarMoeda(ganho);
                 comissaoIndividualEl.textContent = formatarMoeda(ganho * TAXA_COMISSAO);
@@ -1604,11 +2151,14 @@
                 comissaoIndividualEl.textContent = formatarMoeda(0);
                 ganhoTotalHistoricoEl.textContent = formatarMoeda(0);
                 mediaMensalHistoricoEl.textContent = formatarMoeda(0);
+                dataAdicaoDisplayEl.textContent = "-";
             }
         };
 
         // --- Filtros ---
         const popularFiltroCargo = () => {
+            if (!filtroCargoEl) return;
+            
             filtroCargoEl.innerHTML = '<option value="TODOS">Todos os Cargos</option>';
             [...new Set(colaboradores.map(c => c.cargo))].sort().forEach(cargo => {
                 const option = document.createElement('option');
@@ -1619,13 +2169,18 @@
         };
 
         const popularFiltroColaborador = () => {
+            if (!filtroColaboradorEl) return;
+            
             filtroColaboradorEl.innerHTML = '<option value="TODOS">Todos os Colaboradores</option>';
-            colaboradores.sort((a, b) => a.nome.localeCompare(b.nome)).forEach(colab => {
-                const option = document.createElement('option');
-                option.value = colab.id;
-                option.textContent = `${colab.nome} (${colab.cargo})`;
-                filtroColaboradorEl.appendChild(option);
-            });
+            colaboradores
+                .filter(c => c.ativo !== false)
+                .sort((a, b) => a.nome.localeCompare(b.nome))
+                .forEach(colab => {
+                    const option = document.createElement('option');
+                    option.value = colab.id;
+                    option.textContent = `${colab.nome} (${colab.cargo})`;
+                    filtroColaboradorEl.appendChild(option);
+                });
         };
 
         // --- Contexto do Relatório ---
@@ -1638,7 +2193,7 @@
         // --- Geração de Relatórios ---
         window.gerarEArquivarRelatorio = async () => {
             if (!authReady) {
-                alert("⚠️ Aguarde a conexão com o Firebase ser estabelecida.");
+                showAlert("⚠️ Aguarde a conexão com o Firebase ser estabelecida.", "warning");
                 return;
             }
 
@@ -1646,16 +2201,16 @@
             const filtroColaboradorId = filtroColaboradorEl.value;
 
             // Filtragem
-            let colaboradoresFiltrados = colaboradores;
+            let colaboradoresFiltrados = colaboradores.filter(c => c.ativo !== false);
 
             if (filtroColaboradorId !== 'TODOS') {
-                colaboradoresFiltrados = colaboradores.filter(c => c.id === filtroColaboradorId);
+                colaboradoresFiltrados = colaboradoresFiltrados.filter(c => c.id === filtroColaboradorId);
             } else if (filtroCargo !== 'TODOS') {
-                colaboradoresFiltrados = colaboradores.filter(c => c.cargo === filtroCargo);
+                colaboradoresFiltrados = colaboradoresFiltrados.filter(c => c.cargo === filtroCargo);
             }
 
             if (colaboradoresFiltrados.length === 0) {
-                alert("❌ Nenhum colaborador encontrado com os filtros aplicados.");
+                showAlert("❌ Nenhum colaborador encontrado com os filtros aplicados.", "danger");
                 return;
             }
 
@@ -1679,24 +2234,10 @@
             try {
                 const addRef = await addDoc(historicoCollectionRef, relatorioSnapshot);
                 
-                // Feedback visual
-                const message = document.getElementById('pdf-message');
-                message.innerHTML = `
-                    <div class="badge badge-success animate-fadeIn">
-                        <i class="fas fa-check"></i> Relatório arquivado! ID: ${addRef.id.substr(0, 8)}
-                    </div>
-                `;
-                
-                setTimeout(() => {
-                    message.innerHTML = 'Clique para gerar relatório completo';
-                }, 3000);
+                showAlert(`✅ Relatório arquivado! ID: ${addRef.id.substr(0, 8)}`, "success");
                 
             } catch (e) {
-                document.getElementById('pdf-message').innerHTML = `
-                    <div class="badge badge-danger">
-                        <i class="fas fa-exclamation-triangle"></i> Erro ao salvar: ${e.message}
-                    </div>
-                `;
+                showAlert(`❌ Erro ao salvar: ${e.message}`, "danger");
             }
 
             // Gera visualização
@@ -1705,7 +2246,7 @@
 
         window.visualizarRelatorioHistorico = async (docId) => {
             if (!authReady) {
-                alert("⚠️ Aguarde a conexão com o Firebase.");
+                showAlert("⚠️ Aguarde a conexão com o Firebase.", "warning");
                 return;
             }
             
@@ -1716,7 +2257,7 @@
                 const docSnapshot = await getDoc(docRefHistorico);
 
                 if (!docSnapshot.exists()) {
-                    alert('❌ Relatório histórico não encontrado.');
+                    showAlert('❌ Relatório histórico não encontrado.', "danger");
                     return;
                 }
 
@@ -1724,11 +2265,13 @@
                 gerarRelatorioVisual(relatorio);
 
                 // Scroll para o relatório
-                relatorioOutputEl.scrollIntoView({ behavior: 'smooth' });
+                setTimeout(() => {
+                    relatorioOutputEl.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
 
             } catch (error) {
                 console.error("Erro ao carregar relatório histórico:", error);
-                alert("❌ Erro ao carregar relatório.");
+                showAlert("❌ Erro ao carregar relatório.", "danger");
             }
         };
 
@@ -1741,15 +2284,14 @@
                 const docRefHistorico = doc(historicoCollectionRef, docId);
                 await deleteDoc(docRefHistorico);
                 
-                // Feedback visual
-                alert("✅ Relatório excluído com sucesso!");
+                showAlert("✅ Relatório excluído com sucesso!", "success");
                 
                 // Atualiza a lista
                 abrirModalHistorico();
                 
             } catch (error) {
                 console.error("Erro ao excluir relatório:", error);
-                alert("❌ Erro ao excluir relatório.");
+                showAlert("❌ Erro ao excluir relatório.", "danger");
             }
         };
 
@@ -1762,16 +2304,16 @@
                         <h2 class="card-title">
                             <i class="fas fa-file-pdf"></i> Relatório de Comissão
                         </h2>
-                        <div class="flex-center gap-4">
+                        <div class="flex-center gap-2">
                             <span class="badge badge-success">${dataRelatorio || dataGeracao}</span>
-                            <button class="btn btn-primary" onclick="window.print()">
+                            <button class="btn btn-primary btn-sm" onclick="window.print()">
                                 <i class="fas fa-print"></i> Imprimir
                             </button>
                         </div>
                     </div>
                     
-                    <div class="mb-8">
-                        <div class="grid-3 gap-6">
+                    <div class="mb-6">
+                        <div class="grid-2 md:grid-3 gap-4">
                             <div class="stats-card">
                                 <span class="stats-label">Comissão Total</span>
                                 <div class="stats-value">${formatarMoeda(totalComissao)}</div>
@@ -1782,17 +2324,17 @@
                             </div>
                             <div class="stats-card">
                                 <span class="stats-label">Filtro</span>
-                                <div class="stats-value" style="font-size: 18px;">${filtroAplicado}</div>
+                                <div class="stats-value" style="font-size: 16px;">${filtroAplicado}</div>
                             </div>
                         </div>
                     </div>
                     
                     ${observacoes ? `
-                        <div class="mb-8 p-6" style="background: var(--bg-secondary); border-radius: var(--radius-md);">
-                            <h4 class="mb-3" style="color: var(--text-secondary);">
+                        <div class="mb-6 p-4" style="background: var(--bg-secondary); border-radius: var(--radius-md);">
+                            <h4 class="mb-3" style="color: var(--text-secondary); font-size: 14px;">
                                 <i class="fas fa-sticky-note"></i> Observações
                             </h4>
-                            <p>${observacoes}</p>
+                            <p style="font-size: 14px;">${observacoes}</p>
                         </div>
                     ` : ''}
             `;
@@ -1803,66 +2345,60 @@
                 const stats = calcularEstatisticasHistoricas(colab);
 
                 html += `
-                    <div class="card mb-6" style="border-left: 4px solid var(--primary);">
+                    <div class="card mb-4" style="border-left: 4px solid var(--primary);">
                         <div class="card-header">
-                            <h3 class="card-title">
-                                <span class="badge badge-primary">${index + 1}</span>
+                            <h3 class="card-title" style="font-size: 16px;">
+                                <span class="badge badge-primary" style="font-size: 11px;">${index + 1}</span>
                                 ${colab.nome}
                                 <span class="text-sm text-muted">(${colab.cargo})</span>
                             </h3>
                             <span class="badge badge-success">${formatarMoeda(faturamentoIndividual)}</span>
                         </div>
                         
-                        <div class="grid-3 gap-6 mb-6">
-                            <div class="p-4" style="background: var(--bg-secondary); border-radius: var(--radius-md);">
-                                <span class="stats-label">Comissão (8%)</span>
-                                <div class="stats-value" style="font-size: 24px; color: var(--secondary);">
+                        <div class="grid-2 gap-3 mb-4">
+                            <div class="p-3" style="background: var(--bg-secondary); border-radius: var(--radius-md);">
+                                <span class="stats-label" style="font-size: 12px;">Comissão (8%)</span>
+                                <div class="stats-value" style="font-size: 18px; color: var(--secondary);">
                                     ${formatarMoeda(comissaoIndividual)}
                                 </div>
                             </div>
-                            <div class="p-4" style="background: var(--bg-secondary); border-radius: var(--radius-md);">
-                                <span class="stats-label">Total Histórico</span>
-                                <div class="stats-value" style="font-size: 20px;">
+                            <div class="p-3" style="background: var(--bg-secondary); border-radius: var(--radius-md);">
+                                <span class="stats-label" style="font-size: 12px;">Total Histórico</span>
+                                <div class="stats-value" style="font-size: 18px;">
                                     ${formatarMoeda(stats.totalGanho)}
-                                </div>
-                            </div>
-                            <div class="p-4" style="background: var(--bg-secondary); border-radius: var(--radius-md);">
-                                <span class="stats-label">Média Mensal</span>
-                                <div class="stats-value" style="font-size: 20px;">
-                                    ${formatarMoeda(stats.mediaMensal)}
                                 </div>
                             </div>
                         </div>
                         
-                        <h4 class="mb-4" style="color: var(--text-secondary);">
-                            <i class="fas fa-list-ol"></i> Serviços Prestados
-                        </h4>
-                        
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Serviço</th>
-                                    <th>Qtd.</th>
-                                    <th>Valor Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${colab.servicos.map(servico => `
-                                    <tr>
-                                        <td>${servico.servico}</td>
-                                        <td>${servico.qtd}</td>
-                                        <td>${formatarMoeda(servico.valor)}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
+                        ${colab.servicos.length > 0 ? `
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Serviço</th>
+                                            <th>Qtd.</th>
+                                            <th>Valor Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${colab.servicos.map(servico => `
+                                            <tr>
+                                                <td>${servico.servico}</td>
+                                                <td>${servico.qtd}</td>
+                                                <td>${formatarMoeda(servico.valor)}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        ` : '<p class="text-center text-muted p-4">Nenhum serviço registrado</p>'}
                     </div>
                 `;
             });
 
             html += `
-                    <div class="text-center mt-8 pt-6" style="border-top: 1px solid var(--border-medium);">
-                        <p class="text-muted">Relatório gerado em ${new Date().toLocaleString('pt-BR')}</p>
+                    <div class="text-center mt-6 pt-4" style="border-top: 1px solid var(--border-medium);">
+                        <p class="text-muted" style="font-size: 12px;">Relatório gerado em ${new Date().toLocaleString('pt-BR')}</p>
                     </div>
                 </div>
             `;
@@ -1874,6 +2410,41 @@
             relatorioOutputEl.classList.add('animate-fadeIn');
         };
 
+        // --- Funções de Utilidade ---
+        const showAlert = (message, type = 'info') => {
+            // Remove alertas anteriores
+            const existingAlerts = document.querySelectorAll('.alert-temporary');
+            existingAlerts.forEach(alert => alert.remove());
+
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-temporary animate-fadeIn`;
+            alert.style.position = 'fixed';
+            alert.style.top = '20px';
+            alert.style.right = '20px';
+            alert.style.left = '20px';
+            alert.style.zIndex = '9999';
+            alert.style.maxWidth = '400px';
+            alert.style.margin = '0 auto';
+            alert.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <div style="flex: 1; font-size: 14px;">${message}</div>
+                <button onclick="this.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+            document.body.appendChild(alert);
+
+            // Remove automaticamente após 5 segundos
+            setTimeout(() => {
+                if (alert.parentElement) {
+                    alert.style.transition = 'opacity 0.5s';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 500);
+                }
+            }, 5000);
+        };
+
         // --- Inicialização ---
         window.addEventListener('DOMContentLoaded', () => {
             performAuth();
@@ -1881,15 +2452,39 @@
             // Configura data padrão para o relatório
             if (!dataRelatorioEl.value) {
                 const hoje = new Date();
-                const primeiroDia = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
-                dataRelatorioEl.value = primeiroDia.toISOString().split('T')[0];
+                dataRelatorioEl.value = hoje.toISOString().split('T')[0];
             }
         });
 
+        // Configura datas padrão para o filtro por período
+        const hoje = new Date();
+        const primeiroDiaMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+        const ultimoDiaMes = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
+        
+        if (dataInicialEl && !dataInicialEl.value) {
+            dataInicialEl.value = primeiroDiaMes.toISOString().split('T')[0];
+        }
+        
+        if (dataFinalEl && !dataFinalEl.value) {
+            dataFinalEl.value = ultimoDiaMes.toISOString().split('T')[0];
+        }
+
+        // Adiciona listener para calcular período quando as datas mudarem
+        if (dataInicialEl && dataFinalEl) {
+            dataInicialEl.addEventListener('change', calcularGanhosPeriodo);
+            dataFinalEl.addEventListener('change', calcularGanhosPeriodo);
+            filtroPeriodoColabEl.addEventListener('change', calcularGanhosPeriodo);
+        }
+
         // Exporta funções para o escopo global
         window.adicionarNovoCargo = adicionarNovoCargo;
+        window.excluirCargo = excluirCargo;
         window.abrirModalCargos = abrirModalCargos;
         window.fecharModalCargos = fecharModalCargos;
+        window.abrirModalGerenciarColaboradores = abrirModalGerenciarColaboradores;
+        window.fecharModalGerenciarColaboradores = fecharModalGerenciarColaboradores;
+        window.excluirColaborador = excluirColaborador;
+        window.editarColaborador = editarColaborador;
         window.adicionarNovoColaborador = adicionarNovoColaborador;
         window.adicionarServico = adicionarServico;
         window.removerServico = removerServico;
@@ -1901,6 +2496,8 @@
         window.excluirRelatorioHistorico = excluirRelatorioHistorico;
         window.salvarContextoRelatorio = salvarContextoRelatorio;
         window.selecionarColaborador = selecionarColaborador;
+        window.scrollToSection = scrollToSection;
+        window.calcularGanhosPeriodo = calcularGanhosPeriodo;
     </script>
 </body>
 </html>
